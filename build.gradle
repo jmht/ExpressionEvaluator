@@ -1,0 +1,71 @@
+apply plugin: "java"
+apply plugin: "eclipse"
+
+repositories {
+  mavenCentral()
+} 
+
+ext.versions = [
+    antlr: "4.3",
+    jodatime: "2.3",
+    log4j2: "2.0-rc2",
+    hamcrest: "1.3",
+    junit: "4.11"
+]
+
+configurations {
+    antlr4 {
+        description = "ANTLR4"
+    }
+}
+
+ext.antlr = [
+    grammarpackage: "com.higginsthomas.expressionevaluator.grammar",
+    antlrSource: 'src/main/antlr',
+    destinationDir: "build/generated/antlr"
+]
+
+dependencies {
+  // ANTLR
+  antlr4 "org.antlr:antlr4:${versions.antlr}"
+  compile "org.antlr:antlr4-runtime:${versions.antlr}"
+  
+  // Date/Time
+  compile "joda-time:joda-time:${versions.jodatime}"
+  
+  // Logging
+  compile "org.apache.logging.log4j:log4j-api:${versions.log4j2}"
+  compile "org.apache.logging.log4j:log4j-core:${versions.log4j2}"
+  
+  // JUnit
+  testCompile "org.hamcrest:hamcrest-all:${versions.hamcrest}"
+  testCompile "junit:junit:${versions.junit}"
+}
+
+task antlrOutputDir << {
+    mkdir(antlr.destinationDir)
+}
+
+task generateGrammarSource(dependsOn: antlrOutputDir, type: JavaExec) {
+    description = 'Generates Java sources from ANTLR4 grammars.'
+
+    inputs.dir file(antlr.antlrSource)
+    outputs.dir file(antlr.destinationDir)
+
+    def grammars = fileTree(antlr.antlrSource).include('**/*.g4')
+
+    main = 'org.antlr.v4.Tool'
+    classpath = configurations.antlr4
+    def pkg = antlr.grammarpackage.replaceAll("\\.", "/")
+    args = ["-o", "${antlr.destinationDir}/${pkg}", /*"-atn", "-visitor", "-package", antlr.grammarpackage, */ grammars.files].flatten()
+}
+
+compileJava {
+    dependsOn generateGrammarSource
+    source antlr.destinationDir
+}
+
+clean {
+    delete antlr.destinationDir
+}
+                           

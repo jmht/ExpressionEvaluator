@@ -15,15 +15,6 @@ relation : simpleValue operator simpleValue
 
 nestedExpr : ( not )* '(' orExpr ')';
 
-operator : eq | ne | lt | gt | le | ge;
-
-simpleValue : IDENTIFIER
-            | constant;
-            
-constant : NUMBER
-         | STRING
-         | DATE;
-
 collection : range
            | set;
 
@@ -31,6 +22,18 @@ range : '[' constant '>'? '..' '<'? constant ']';
 
 set : '{' (constant (',' constant)*)? '}';
 
+operator : eq | ne | lt | gt | le | ge;
+
+simpleValue : IDENTIFIER
+            | constant;
+            
+constant : number
+         | STRING
+         | DATE;
+
+number : INTEGER
+       | DECIMAL
+       | FLOAT;
 
 /* Psuedo-terminals */
 // These reflect logical terminals defined by multiple lexical representations
@@ -59,7 +62,11 @@ like : 'like' | '~' | '~=';
 // Identifier MUST follow definition of all keywords to avoid masking them
 IDENTIFIER : LETTER (LETTER | DIGIT | CONJ)*;
 
-NUMBER : SIGN? DIGIT+ ('.' DIGIT*)? EXPONENT?;
+INTEGER : INTPART;
+
+DECIMAL : INTPART FRACTPART;
+
+FLOAT : INTPART FRACTPART? EXPONENT;
 
 STRING : DQUOTE (CHAR | SQUOTE)* DQUOTE
        | SQUOTE (CHAR | DQUOTE)* SQUOTE;
@@ -73,6 +80,10 @@ WS : [ \t\n\r]+ -> skip ;
 fragment SIGN : ('+' | '-');
 
 fragment DIGIT : [0-9];
+
+fragment INTPART : SIGN? DIGIT+;
+
+fragment FRACTPART : '.' DIGIT*;
 
 fragment EXPONENT : ([eE] SIGN? DIGIT+);
 

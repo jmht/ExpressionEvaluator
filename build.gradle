@@ -22,7 +22,7 @@ configurations {
 ext.antlr = [
     grammarpackage: "com.higginsthomas.expressionevaluator.grammar",
     antlrSource: 'src/main/antlr',
-    destinationDir: "build/generated/antlr"
+    destinationDir: "src/generated/antlr"
 ]
 
 dependencies {

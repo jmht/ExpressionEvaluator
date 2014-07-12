@@ -2,23 +2,21 @@ grammar ExpressionGrammar;
 @header { package com.higginsthomas.expressionevaluator.grammar; }
 
 /* Non-terminals */
-expr : orExpr EOF;
+start : expr? EOF;
 
-orExpr : andExpr ( or orExpr )*;
-
-andExpr : relation ( and andExpr )*;
-
+expr : relation
+     | expr and expr                // 'and' has precedence (tighter binding) than 'or'
+     | expr or expr
+     | ( not )* '(' expr ')';
+     
 relation : simpleValue operator simpleValue
          | simpleValue 'in' collection
-         | simpleValue like STRING
-         | nestedExpr;
-
-nestedExpr : ( not )* '(' orExpr ')';
+         | simpleValue like STRING;
 
 collection : range
            | set;
 
-range : '[' constant '>'? '..' '<'? constant ']'; 
+range : '[' constant '>'? ':' '<'? constant ']'; 
 
 set : '{' (constant (',' constant)*)? '}';
 
@@ -27,13 +25,11 @@ operator : eq | ne | lt | gt | le | ge;
 simpleValue : IDENTIFIER
             | constant;
             
-constant : number
+constant : INTEGER
+         | DECIMAL
+         | FLOAT
          | STRING
          | DATE;
-
-number : INTEGER
-       | DECIMAL
-       | FLOAT;
 
 /* Psuedo-terminals */
 // These reflect logical terminals defined by multiple lexical representations
@@ -59,17 +55,17 @@ like : 'like' | '~' | '~=';
 
 
 /* Terminals */
-// Identifier MUST follow definition of all keywords to avoid masking them
 IDENTIFIER : LETTER (LETTER | DIGIT | CONJ)*;
 
-INTEGER : INTPART;
+INTEGER : SIGN? DIGIT+;
 
-DECIMAL : INTPART FRACTPART;
+DECIMAL : INTEGER '.' DIGIT*
+        | SIGN? '.' DIGIT+;
 
-FLOAT : INTPART FRACTPART? EXPONENT;
+FLOAT : (INTEGER | DECIMAL ) ([eE] SIGN? DIGIT+);
 
-STRING : DQUOTE (CHAR | SQUOTE)* DQUOTE
-       | SQUOTE (CHAR | DQUOTE)* SQUOTE;
+STRING : DQUOTE (CHAR | SQUOTE)*? DQUOTE
+       | SQUOTE (CHAR | DQUOTE)*? SQUOTE;
 
 DATE : DIGIT? DIGIT '-' DIGIT? DIGIT '-' DIGIT DIGIT DIGIT DIGIT
      | DIGIT? DIGIT '/' DIGIT? DIGIT '/' DIGIT DIGIT DIGIT DIGIT;
@@ -81,23 +77,19 @@ fragment SIGN : ('+' | '-');
 
 fragment DIGIT : [0-9];
 
-fragment INTPART : SIGN? DIGIT+;
-
-fragment FRACTPART : '.' DIGIT*;
-
-fragment EXPONENT : ([eE] SIGN? DIGIT+);
-
 fragment LETTER : [a-zA-Z];
 
+fragment ID_LETTER : (LETTER | CONJ);
+
 fragment CONJ : [-_];
+
+fragment CHAR : ESC
+              | ~[\'\\"];
+       
+fragment ESC : BSLASH .;
 
 fragment SQUOTE : '\'';
 
 fragment DQUOTE : '"';
-
-fragment CHAR : ESC
-              | ~('\\' | '\'' | '"');
-       
-fragment ESC : BSLASH .;
 
 fragment BSLASH : '\\';

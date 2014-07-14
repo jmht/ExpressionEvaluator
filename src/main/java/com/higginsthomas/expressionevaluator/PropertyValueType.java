@@ -16,7 +16,7 @@ package com.higginsthomas.expressionevaluator;
  *                     by <code>PropertyMap</code> and not <code>PropertySet</code></td></tr>
  * </table>
  * 
- * @author james
+ * @author James Higgins-Thomas
  */
 public enum PropertyValueType {
     VARIANT, 

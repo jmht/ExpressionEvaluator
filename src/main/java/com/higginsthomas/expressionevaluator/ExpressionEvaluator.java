@@ -4,7 +4,7 @@ package com.higginsthomas.expressionevaluator;
  * This class is responsible for evaluating a compiled query expression
  * over a provided set of properties.
  * 
- * @author james
+ * @author James Higgins-Thomas
  */
 public interface ExpressionEvaluator {
     /**

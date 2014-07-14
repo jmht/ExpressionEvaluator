@@ -4,17 +4,20 @@ grammar ExpressionGrammar;
 /* Non-terminals */
 start : expr? EOF;
 
-expr : relation
-     | expr and expr                // 'and' has precedence (tighter binding) than 'or'
-     | expr or expr
-     | ( not )* '(' expr ')';
+expr : ( not )* '(' expr ')'                    # notExpr
+     | relation                                 # relExpr
+     | expr and expr                            # andExpr
+     | expr or expr                             # orExpr
+     ;
      
-relation : simpleValue operator simpleValue
-         | simpleValue 'in' collection
-         | simpleValue like STRING;
+relation : simpleValue operator simpleValue     # compare
+         | simpleValue 'in' collection          # inCollection
+         | simpleValue like STRING              # regexCompare
+         ;
 
 collection : range
-           | set;
+           | set
+           ;
 
 range : '[' constant '>'? ':' '<'? constant ']'; 
 
@@ -22,17 +25,20 @@ set : '{' (constant (',' constant)*)? '}';
 
 operator : eq | ne | lt | gt | le | ge;
 
-simpleValue : IDENTIFIER
-            | constant;
+simpleValue : IDENTIFIER                        #identifier
+            | constant                          #constValue
+            ;
             
-constant : INTEGER
-         | DECIMAL
-         | FLOAT
-         | STRING
-         | DATE;
+constant : INTEGER                              # intConstant
+         | DECIMAL                              # decContent
+         | FLOAT                                # floatContent
+         | STRING                               # strContent
+         | DATE                                 # dateContent
+         ;
 
 /* Psuedo-terminals */
-// These reflect logical terminals defined by multiple lexical representations
+// These are defined as rules to allow for the fact that these symbols have other
+// lexical meanings in the grammar.
 or : 'or' | '|' | '||';
 
 and : 'and' | '&' | '&&';
@@ -55,7 +61,7 @@ like : 'like' | '~' | '~=';
 
 
 /* Terminals */
-IDENTIFIER : LETTER (LETTER | DIGIT | CONJ)*;
+IDENTIFIER : ID_NAME (ID_CONJ ID_NAME)*;
 
 INTEGER : SIGN? DIGIT+;
 
@@ -79,14 +85,21 @@ fragment DIGIT : [0-9];
 
 fragment LETTER : [a-zA-Z];
 
-fragment ID_LETTER : (LETTER | CONJ);
+// Identifiers consist of simple or compound "names". Names must begin with a letter, but may consist
+// of letters and digits. Compound names are simple names conjoined with either a period or hyphen.
+fragment ID_LETTER : (LETTER | '_');                    // Underscore is considered a "letter" in an identifier
 
-fragment CONJ : [-_];
+fragment ID_NAME : ID_LETTER (ID_LETTER | DIGIT)*; 
 
-fragment CHAR : ESC
-              | ~[\'\\"];
+fragment ID_CONJ : [-\.]; 
+
+// Strings consist of character sequences within a matched pair of single or double quotes. The backslash character
+// is used as an escape the following character.
+fragment CHAR : ESC  
+              | ~[\'\"];
        
-fragment ESC : BSLASH .;
+fragment ESC : BSLASH .;                                // Backslash escapes any following character - interpretation
+                                                        // of the escape sequence is deferred to the semantic layer. 
 
 fragment SQUOTE : '\'';
 

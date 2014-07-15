@@ -21,6 +21,6 @@ public class ParseTreeVisitorTests {
         ExpressionGrammarParser parser = new ExpressionGrammarParser(tstream);
         ParseTree tree = parser.relation();
         ParseTreeVisitor visitor = new ParseTreeVisitor();
-        visitor.visit(tree);
+        IntermediateCode il_code = visitor.visit(tree);
     }
 }

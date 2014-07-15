@@ -30,10 +30,10 @@ simpleValue : IDENTIFIER                        #identifier
             ;
             
 constant : INTEGER                              # intConstant
-         | DECIMAL                              # decContent
-         | FLOAT                                # floatContent
-         | STRING                               # strContent
-         | DATE                                 # dateContent
+         | DECIMAL                              # decConstant
+         | FLOAT                                # floatConstant
+         | STRING                               # strConstant
+         | DATE                                 # dateConstant
          ;
 
 /* Psuedo-terminals */

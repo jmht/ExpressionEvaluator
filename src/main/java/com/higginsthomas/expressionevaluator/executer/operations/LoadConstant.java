@@ -1,12 +1,10 @@
 package com.higginsthomas.expressionevaluator.executer.operations;
 
-import com.higginsthomas.expressionevaluator.PropertyValue;
-
 
 public class LoadConstant extends Operation {
-    private final PropertyValue value;
+    private final int constant;
     
-    public LoadConstant(PropertyValue value) {
-        this.value = value;
+    public LoadConstant(int constant) {
+        this.constant = constant;
     }
 }

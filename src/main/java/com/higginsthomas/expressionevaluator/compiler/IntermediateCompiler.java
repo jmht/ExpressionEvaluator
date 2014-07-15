@@ -15,7 +15,16 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
     private final IntermediateCode il_code = new IntermediateCode();
 
     public IntermediateCode getIntermediateCode() { return il_code; }
+
     
+    public IntermediateCompiler visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
+        // Post-fix traversal
+        visit(ctx.children.get(0));
+        visit(ctx.children.get(2));
+        visit(ctx.children.get(1));
+        return this;
+    }
+
     public IntermediateCompiler visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
         // Post-fix traversal
         visit(ctx.children.get(0));
@@ -66,39 +75,28 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
     }
 
     public IntermediateCompiler visitIntConstant(final ExpressionGrammarParser.IntConstantContext ctx) {
-        final PropertyValue value = new IntegerPropertyValue(new BigInteger(ctx.getText()));
-        final int c_index = il_code.getConstantIndex(value);
-        il_code.addOperation(new LoadConstant(c_index));
-        return this;
+        return handleConstant(new IntegerPropertyValue(new BigInteger(ctx.getText())));
     }
 
     public IntermediateCompiler visitDecConstant(final ExpressionGrammarParser.DecConstantContext ctx) {
-        final PropertyValue value = new DecimalPropertyValue(new BigDecimal(ctx.getText()));
-        final int c_index = il_code.getConstantIndex(value);
-        il_code.addOperation(new LoadConstant(c_index));
-        return this;
+        return handleConstant(new DecimalPropertyValue(new BigDecimal(ctx.getText())));
     }
 
     public IntermediateCompiler visitFloatConstant(final ExpressionGrammarParser.FloatConstantContext ctx) {
-        final PropertyValue value = new FloatPropertyValue(Double.parseDouble(ctx.getText()));
-        final int c_index = il_code.getConstantIndex(value);
-        il_code.addOperation(new LoadConstant(c_index));
-        return this;
+        return handleConstant(new FloatPropertyValue(Double.parseDouble(ctx.getText())));
     }
 
     public IntermediateCompiler visitStrConstant(final ExpressionGrammarParser.StrConstantContext ctx) {
-        final PropertyValue value = new TextPropertyValue(ctx.getText());
-        final int c_index = il_code.getConstantIndex(value);
-        il_code.addOperation(new LoadConstant(c_index));
-        return this;
+        return handleConstant(new TextPropertyValue(ctx.getText()));
     }
     
     public IntermediateCompiler visitDateConstant(final ExpressionGrammarParser.DateConstantContext ctx) {
-        final PropertyValue value = new DatePropertyValue(
-                                        DateTimeFormat.forPattern("mm-dd-yyyy")
-                                        .parseLocalDate(ctx.getText()));
-        final int c_index = il_code.getConstantIndex(value);
-        il_code.addOperation(new LoadConstant(c_index));
+        return handleConstant(new DatePropertyValue(DateTimeFormat.forPattern("mm-dd-yyyy").parseLocalDate(ctx.getText())));
+    }
+
+    
+    private IntermediateCompiler handleConstant(PropertyValue value) {
+        il_code.addOperation(new LoadConstant(value));
         return this;
     }
 }

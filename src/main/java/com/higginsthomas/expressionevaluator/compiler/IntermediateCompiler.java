@@ -11,92 +11,94 @@ import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarBaseVisito
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
 
 
-class ParseTreeVisitor extends ExpressionGrammarBaseVisitor<IntermediateCode> {
+class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateCompiler> {
     private final IntermediateCode il_code = new IntermediateCode();
 
-    public IntermediateCode visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
+    public IntermediateCode getIntermediateCode() { return il_code; }
+    
+    public IntermediateCompiler visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
         // Post-fix traversal
         visit(ctx.children.get(0));
         visit(ctx.children.get(2));
         visit(ctx.children.get(1));
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitEq(final ExpressionGrammarParser.LtContext ctx) {
+    public IntermediateCompiler visitEq(final ExpressionGrammarParser.EqContext ctx) {
         il_code.addOperation(new IsEQ());
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitNe(final ExpressionGrammarParser.LtContext ctx) {
+    public IntermediateCompiler visitNe(final ExpressionGrammarParser.NeContext ctx) {
         il_code.addOperation(new IsEQ());
         il_code.addOperation(new Not());
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitLt(final ExpressionGrammarParser.LtContext ctx) {
+    public IntermediateCompiler visitLt(final ExpressionGrammarParser.LtContext ctx) {
         il_code.addOperation(new IsLT());
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitGt(final ExpressionGrammarParser.LtContext ctx) {
+    public IntermediateCompiler visitGt(final ExpressionGrammarParser.GtContext ctx) {
         il_code.swap();
         il_code.addOperation(new IsLT());
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitGe(final ExpressionGrammarParser.LtContext ctx) {
+    public IntermediateCompiler visitGe(final ExpressionGrammarParser.GeContext ctx) {
         il_code.addOperation(new IsLT());
         il_code.addOperation(new Not());
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitLe(final ExpressionGrammarParser.LtContext ctx) {
+    public IntermediateCompiler visitLe(final ExpressionGrammarParser.LeContext ctx) {
         il_code.swap();
         il_code.addOperation(new IsLT());
         il_code.addOperation(new Not());
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitIdentifier(final ExpressionGrammarParser.IdentifierContext ctx) {
+    public IntermediateCompiler visitIdentifier(final ExpressionGrammarParser.IdentifierContext ctx) {
         int id_index = il_code.getIdentifierIndex(ctx.getText());
         il_code.addOperation(new LoadIdentifier(id_index));
-        return il_code;
+        return this;
     }
 
-    public IntermediateCode visitIntConstant(final ExpressionGrammarParser.IntConstantContext ctx) {
+    public IntermediateCompiler visitIntConstant(final ExpressionGrammarParser.IntConstantContext ctx) {
         final PropertyValue value = new IntegerPropertyValue(new BigInteger(ctx.getText()));
         final int c_index = il_code.getConstantIndex(value);
         il_code.addOperation(new LoadConstant(c_index));
-        return il_code;
+        return this;
     }
 
-    public IntermediateCode visitDecConstant(final ExpressionGrammarParser.DecConstantContext ctx) {
+    public IntermediateCompiler visitDecConstant(final ExpressionGrammarParser.DecConstantContext ctx) {
         final PropertyValue value = new DecimalPropertyValue(new BigDecimal(ctx.getText()));
         final int c_index = il_code.getConstantIndex(value);
         il_code.addOperation(new LoadConstant(c_index));
-        return il_code;
+        return this;
     }
 
-    public IntermediateCode visitFloatConstant(final ExpressionGrammarParser.FloatConstantContext ctx) {
+    public IntermediateCompiler visitFloatConstant(final ExpressionGrammarParser.FloatConstantContext ctx) {
         final PropertyValue value = new FloatPropertyValue(Double.parseDouble(ctx.getText()));
         final int c_index = il_code.getConstantIndex(value);
         il_code.addOperation(new LoadConstant(c_index));
-        return il_code;
+        return this;
     }
 
-    public IntermediateCode visitStrConstant(final ExpressionGrammarParser.StrConstantContext ctx) {
+    public IntermediateCompiler visitStrConstant(final ExpressionGrammarParser.StrConstantContext ctx) {
         final PropertyValue value = new TextPropertyValue(ctx.getText());
         final int c_index = il_code.getConstantIndex(value);
         il_code.addOperation(new LoadConstant(c_index));
-        return il_code;
+        return this;
     }
     
-    public IntermediateCode visitDateConstant(final ExpressionGrammarParser.DateConstantContext ctx) {
+    public IntermediateCompiler visitDateConstant(final ExpressionGrammarParser.DateConstantContext ctx) {
         final PropertyValue value = new DatePropertyValue(
                                         DateTimeFormat.forPattern("mm-dd-yyyy")
                                         .parseLocalDate(ctx.getText()));
         final int c_index = il_code.getConstantIndex(value);
         il_code.addOperation(new LoadConstant(c_index));
-        return il_code;
+        return this;
     }
 }

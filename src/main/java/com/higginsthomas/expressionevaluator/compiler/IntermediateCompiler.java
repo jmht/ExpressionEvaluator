@@ -18,18 +18,25 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
 
     
     public IntermediateCompiler visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
-        // Post-fix traversal
-        visit(ctx.children.get(0));
-        visit(ctx.children.get(2));
-        visit(ctx.children.get(1));
+        visit(ctx.children.get(0));         // push left argument
+        visit(ctx.children.get(2));         // process collection
         return this;
     }
 
+    public IntermediateCompiler visitRange(final ExpressionGrammarParser.RangeContext ctx) {
+    
+        return this;
+    }
+
+    public IntermediateCompiler visitSet(final ExpressionGrammarParser.SetContext ctx) {
+    
+        return this;
+    }
+    
     public IntermediateCompiler visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
-        // Post-fix traversal
-        visit(ctx.children.get(0));
-        visit(ctx.children.get(2));
-        visit(ctx.children.get(1));
+        visit(ctx.children.get(0));         // push left argument
+        visit(ctx.children.get(2));         // push right argument
+        visit(ctx.children.get(1));         // process comparator
         return this;
     }
     

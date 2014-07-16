@@ -14,14 +14,45 @@ class IntermediateCode {
     private Map<String, Integer> id_map = new HashMap<String, Integer>();
 
     /**
+     * Return the current location (address of next code)
+     * 
+     * @return address
+     */
+    int currentAddress() {
+        return code.size();
+    }
+    
+    /**
      * Appends an operation to the end of the code stream.
      * 
      * @param op    the operation to add
-     * @return <code>this</code> 
+     * @return opcode address 
      */
-    IntermediateCode addOperation(Operation op) {
+    int addOperation(Operation op) {
         code.add(op);
-        return this;
+        return code.size() - 1;
+    }
+
+    /**
+     * Replaces the operation at the specified index
+     * with another.
+     * 
+     * @param index the address to replace
+     * @param op    the new operation
+     * @return opcode address 
+     */
+    int replaceOperation(int index, Operation op) {
+        code.set(index, op);
+        return index;
+    }
+
+    /**
+     * Removes the last operation from the code stream and returns it.
+     * 
+     * @return the removed operation. 
+     */
+    Operation removeOperation() {
+        return code.remove(code.size()-1);
     }
 
     /**
@@ -61,11 +92,13 @@ class IntermediateCode {
     /**
      * Return the operation at the specified code location.
      * 
-     * @param offset code address, relative to the end of the stream.
+     * @param offset code address. If negative, offset from tail (e.g. 0 is 
+     *               first operation, -1 is last).
      * @return the operation at the given offset.
      */
     Operation getOperationAt(int offset) {
-        return code.get(code.size() - offset - 1);
+        final int index = (offset >= 0) ? offset : code.size() + offset;
+        return code.get(index);
     }
 
     /**

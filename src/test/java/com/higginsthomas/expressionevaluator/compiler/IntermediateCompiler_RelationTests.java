@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.higginsthomas.expressionevaluator.executer.operations.*;
 
 
-public class IntermediateCompiler_RelationTests extends IntermediateCompilerTestBase{
+public class IntermediateCompiler_RelationTests extends IntermediateCompilerTestBase {
 
     @Test
     public void testRelation_Compare_LT() {

@@ -19,6 +19,6 @@ public class IntermediateCompiler_SetTests extends IntermediateCompilerTestBase 
         IntermediateCode result = sut.visit(tree).getIntermediateCode();
 
 //        assertThat(result.getOperationAt(-1), instanceOf(IsIn.class));
-        assertThat(result.getOperationAt(-2), instanceOf(LoadIdentifier.class));
+        assertThat(result.getOperationAt(-1), instanceOf(LoadIdentifier.class));
     }
 }

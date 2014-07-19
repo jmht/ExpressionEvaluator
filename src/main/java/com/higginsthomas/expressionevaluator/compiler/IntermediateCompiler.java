@@ -18,30 +18,30 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
 
     
     public IntermediateCompiler visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
-        visit(ctx.getChild(0));         // push left argument
-        visit(ctx.getChild(2));         // process collection
+        visit(ctx.a);         // push left argument
+        visit(ctx.c);         // process collection
         return this;
     }
 
     public IntermediateCompiler visitRange(final ExpressionGrammarParser.RangeContext ctx) {
         Operation operand = il_code.removeOperation();  // pop the first operand
-        if ( ctx.getChild(2).getText().equals(">") ) {
-            visit(ctx.getChild(1));         // push lower bound
+        if ( ctx.lincl != null ) {
+            visit(ctx.lb);                      // push lower bound
             il_code.addOperation(operand);      // push our operand
             il_code.addOperation(IsLT.op());    // LT
         } else {
             il_code.addOperation(operand);      // push our operand
-            visit(ctx.getChild(1));         // push lower bound
+            visit(ctx.lb);                      // push lower bound
             il_code.addOperation(IsLT.op());    // ~LT
             il_code.addOperation(Not.op());
         }
         int andIp = il_code.addOperation(NOP.op());    // AND
-        if ( ctx.getChild(ctx.getChildCount() - 3).getText().equals("<") ) {
+        if ( ctx.rincl != null ) {
             il_code.addOperation(operand);      // push our operand again
-            visit(ctx.getChild(ctx.getChildCount() - 2));   // push upper bound
+            visit(ctx.ub);   // push upper bound
             il_code.addOperation(IsLT.op());    // LT
         } else {
-            visit(ctx.getChild(ctx.getChildCount() - 2));   // push upper bound
+            visit(ctx.ub);   // push upper bound
             il_code.addOperation(operand);      // push our operand again
             il_code.addOperation(IsLT.op());    // ~LT
             il_code.addOperation(Not.op());
@@ -51,14 +51,16 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
     }
 
     public IntermediateCompiler visitSet(final ExpressionGrammarParser.SetContext ctx) {
-    
+        for ( ExpressionGrammarParser.ConstantContext x : ctx.e) {
+            visit(x);
+        }
         return this;
     }
     
     public IntermediateCompiler visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
-        visit(ctx.getChild(0));         // push left argument
-        visit(ctx.getChild(2));         // push right argument
-        visit(ctx.getChild(1));         // process comparator
+        visit(ctx.a);          // push left argument
+        visit(ctx.b);          // push right argument
+        visit(ctx.op);         // process comparator
         return this;
     }
     

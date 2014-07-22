@@ -2,6 +2,7 @@ package com.higginsthomas.expressionevaluator.compiler;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashSet;
 
 import org.joda.time.format.DateTimeFormat;
 
@@ -18,30 +19,32 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
 
     
     public IntermediateCompiler visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
-        visit(ctx.a);         // push left argument
-        visit(ctx.c);         // process collection
+        visit(ctx.simpleValue());       // push left argument
+        visit(ctx.collection());        // process collection
         return this;
     }
 
     public IntermediateCompiler visitRange(final ExpressionGrammarParser.RangeContext ctx) {
+        final int lb = 0;
+        final int ub = 1;
         Operation operand = il_code.removeOperation();  // pop the first operand
-        if ( ctx.lincl != null ) {
-            visit(ctx.lb);                      // push lower bound
+        if ( ctx.lexcl != null ) {
+            visit(ctx.constant(lb));            // push lower bound
             il_code.addOperation(operand);      // push our operand
             il_code.addOperation(IsLT.op());    // LT
         } else {
             il_code.addOperation(operand);      // push our operand
-            visit(ctx.lb);                      // push lower bound
+            visit(ctx.constant(lb));            // push lower bound
             il_code.addOperation(IsLT.op());    // ~LT
             il_code.addOperation(Not.op());
         }
         int andIp = il_code.addOperation(NOP.op());    // AND
-        if ( ctx.rincl != null ) {
+        if ( ctx.rexcl != null ) {
             il_code.addOperation(operand);      // push our operand again
-            visit(ctx.ub);   // push upper bound
+            visit(ctx.constant(ub));            // push upper bound
             il_code.addOperation(IsLT.op());    // LT
         } else {
-            visit(ctx.ub);   // push upper bound
+            visit(ctx.constant(ub));            // push upper bound
             il_code.addOperation(operand);      // push our operand again
             il_code.addOperation(IsLT.op());    // ~LT
             il_code.addOperation(Not.op());
@@ -51,16 +54,20 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
     }
 
     public IntermediateCompiler visitSet(final ExpressionGrammarParser.SetContext ctx) {
-        for ( ExpressionGrammarParser.ConstantContext x : ctx.e) {
+        HashSet<PropertyValue> s = new HashSet<PropertyValue>();
+        for ( ExpressionGrammarParser.ConstantContext x : ctx.constant()) {
             visit(x);
+            s.add(((LoadConstant)il_code.removeOperation()).getValue());
         }
         return this;
     }
     
     public IntermediateCompiler visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
-        visit(ctx.a);          // push left argument
-        visit(ctx.b);          // push right argument
-        visit(ctx.op);         // process comparator
+        final int left = 0;
+        final int right = 1;
+        visit(ctx.simpleValue(left));   // push left argument
+        visit(ctx.simpleValue(right));  // push right argument
+        visit(ctx.operator());          // process comparator
         return this;
     }
     

@@ -10,18 +10,18 @@ expr : ( not )* '(' expr ')'                    # notExpr
      | expr or expr                             # orExpr
      ;
      
-relation : a=simpleValue op=operator b=simpleValue      # compare
-         | a=simpleValue 'in' c=collection              # inCollection
-         | a=simpleValue like s=STRING                  # regexCompare
+relation : simpleValue operator simpleValue      # compare
+         | simpleValue 'in' collection              # inCollection
+         | simpleValue like STRING                  # regexCompare
          ;
 
 collection : range
            | set
            ;
 
-range : '[' lb=constant lincl='>'? ':' rincl='<'? ub=constant ']'; 
+range : '[' constant lexcl='>'? ':' rexcl='<'? constant ']'; 
 
-set : '{' (e+=constant (',' e+=constant)*)? '}';
+set : '{' (constant (',' constant)*)? '}';
 
 operator : eq | ne | lt | gt | le | ge;
 

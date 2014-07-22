@@ -16,11 +16,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         ParseTree tree = parser("x < 5").relation();
         IntermediateCompiler sut = new IntermediateCompiler();
         
-        IntermediateCode result = sut.visit(tree).getIntermediateCode();
-        
-        assertThat(result.getOperationAt(-1), instanceOf(IsLT.class));
-        assertThat(result.getOperationAt(-2), instanceOf(LoadConstant.class));
-        assertThat(result.getOperationAt(-3), instanceOf(LoadIdentifier.class));
+        LtOperation result = (LtOperation)sut.visit(tree);
+
+        assert(result.getRight().getValue().equals(5));
+        assertThat(result.isNegated(), is(false));
     }
 
     @Test
@@ -28,11 +27,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         ParseTree tree = parser("x > 5").relation();
         IntermediateCompiler sut = new IntermediateCompiler();
         
-        IntermediateCode result = sut.visit(tree).getIntermediateCode();
-        
-        assertThat(result.getOperationAt(-1), instanceOf(IsLT.class));
-        assertThat(result.getOperationAt(-2), instanceOf(LoadIdentifier.class));
-        assertThat(result.getOperationAt(-3), instanceOf(LoadConstant.class));
+        LtOperation result = (LtOperation)sut.visit(tree);
+
+        assert(result.getLeft().getValue().equals(5));
+        assertThat(result.isNegated(), is(false));
     }
 
     @Test
@@ -40,12 +38,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         ParseTree tree = parser("x >= 5").relation();
         IntermediateCompiler sut = new IntermediateCompiler();
         
-        IntermediateCode result = sut.visit(tree).getIntermediateCode();
-        
-        assertThat(result.getOperationAt(-1), instanceOf(Not.class));
-        assertThat(result.getOperationAt(-2), instanceOf(IsLT.class));
-        assertThat(result.getOperationAt(-3), instanceOf(LoadConstant.class));
-        assertThat(result.getOperationAt(-4), instanceOf(LoadIdentifier.class));
+        LtOperation result = (LtOperation)sut.visit(tree);
+
+        assert(result.getLeft().getValue().equals(5));
+        assertThat(result.isNegated(), is(true));
     }
 
     @Test
@@ -53,12 +49,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         ParseTree tree = parser("x <= 5").relation();
         IntermediateCompiler sut = new IntermediateCompiler();
         
-        IntermediateCode result = sut.visit(tree).getIntermediateCode();
-        
-        assertThat(result.getOperationAt(-1), instanceOf(Not.class));
-        assertThat(result.getOperationAt(-2), instanceOf(IsLT.class));
-        assertThat(result.getOperationAt(-3), instanceOf(LoadIdentifier.class));
-        assertThat(result.getOperationAt(-4), instanceOf(LoadConstant.class));
+        LtOperation result = (LtOperation)sut.visit(tree);
+
+        assert(result.getRight().getValue().equals(5));
+        assertThat(result.isNegated(), is(true));
     }
 
     @Test
@@ -66,11 +60,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         ParseTree tree = parser("x = 5").relation();
         IntermediateCompiler sut = new IntermediateCompiler();
         
-        IntermediateCode result = sut.visit(tree).getIntermediateCode();
-        
-        assertThat(result.getOperationAt(-1), instanceOf(IsEQ.class));
-        assertThat(result.getOperationAt(-2), instanceOf(LoadConstant.class));
-        assertThat(result.getOperationAt(-3), instanceOf(LoadIdentifier.class));
+        EqOperation result = (EqOperation)sut.visit(tree);
+
+        assert(result.getRight().getValue().equals(5));
+        assertThat(result.isNegated(), is(false));
     }
 
     @Test
@@ -78,11 +71,9 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         ParseTree tree = parser("x != 5").relation();
         IntermediateCompiler sut = new IntermediateCompiler();
         
-        IntermediateCode result = sut.visit(tree).getIntermediateCode();
-        
-        assertThat(result.getOperationAt(-1), instanceOf(Not.class));
-        assertThat(result.getOperationAt(-2), instanceOf(IsEQ.class));
-        assertThat(result.getOperationAt(-3), instanceOf(LoadConstant.class));
-        assertThat(result.getOperationAt(-4), instanceOf(LoadIdentifier.class));
+        EqOperation result = (EqOperation)sut.visit(tree);
+
+        assert(result.getRight().getValue().equals(5));
+        assertThat(result.isNegated(), is(true));
     }
 }

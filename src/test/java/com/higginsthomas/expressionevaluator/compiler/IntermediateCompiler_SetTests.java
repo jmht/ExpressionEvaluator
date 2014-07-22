@@ -16,9 +16,6 @@ public class IntermediateCompiler_SetTests extends IntermediateCompilerTestBase 
         ParseTree tree = parser("x in {1, 2, 3}").relation();
         IntermediateCompiler sut = new IntermediateCompiler();
         
-        IntermediateCode result = sut.visit(tree).getIntermediateCode();
-
-//        assertThat(result.getOperationAt(-1), instanceOf(IsIn.class));
-        assertThat(result.getOperationAt(-1), instanceOf(LoadIdentifier.class));
+        InOperation result = (InOperation)sut.visit(tree);
     }
 }

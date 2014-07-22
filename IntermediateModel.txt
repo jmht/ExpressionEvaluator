@@ -1,0 +1,14 @@
+Operations:
+    (OR, leftValue, rightValue, not)
+    (AND, leftValue, rightValue, not)
+    (LT, leftValue, rightValue, not)
+    (EQ, leftValue, rightValue, not)
+    (IN, collection, not)
+
+Values:
+    (Identifier, name, type)
+    (Constant, type, value)
+
+Collections:    
+    (Set, type, value)
+    (Range, minValue, maxValue, minIncl, maxIncl)

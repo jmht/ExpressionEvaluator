@@ -57,7 +57,7 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<IntermediateComp
         HashSet<PropertyValue> s = new HashSet<PropertyValue>();
         for ( ExpressionGrammarParser.ConstantContext x : ctx.constant()) {
             visit(x);
-            s.add(((LoadConstant)il_code.removeOperation()).getValue());
+            //TODO: s.add(((LoadConstant)il_code.removeOperation()).getValue());
         }
         return this;
     }

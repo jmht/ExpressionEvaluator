@@ -2,7 +2,6 @@ package com.higginsthomas.expressionevaluator.compiler;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.HashSet;
 
 import org.joda.time.format.DateTimeFormat;
 
@@ -13,9 +12,13 @@ import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
 
 
 class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
-    private final IntermediateCode il_code = new IntermediateCode();
-
-    public IntermediateCode getIntermediateCode() { return il_code; }
+//    private final PropertyMap identifierMap;
+    private final IdentifierCache id_cache;
+    
+    public IntermediateCompiler(PropertyMap identifierMap) {
+//        this.identifierMap = identifierMap;
+        this.id_cache = new IdentifierCache(identifierMap);
+    }
 
     
     public Object visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
@@ -123,10 +126,7 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     }
     
     public Object visitIdentifier(final ExpressionGrammarParser.IdentifierContext ctx) {
-//        int id_index = il_code.getIdentifierIndex(ctx.getText());
-//        il_code.addOperation(LoadIdentifier.op(id_index));
-//        return this;
-        return null;
+        return id_cache.getIdentifierAt(id_cache.getIdentifierIndex(ctx.getText()));
     }
 
     public Object visitIntConstant(final ExpressionGrammarParser.IntConstantContext ctx) {

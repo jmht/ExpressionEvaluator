@@ -6,6 +6,6 @@ public abstract class Operation {
     
     protected Operation(boolean negate) { this.negated = negate; }
     
-    public Operation negate() { negated = !negated; return this; }
+    public abstract Operation negate();
     public boolean isNegated() { return negated; }
 }

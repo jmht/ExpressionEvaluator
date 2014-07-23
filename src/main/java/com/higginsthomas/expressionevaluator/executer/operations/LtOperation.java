@@ -11,6 +11,9 @@ public class LtOperation extends Operation {
         this.left = left;
         this.right = right;
     }
+
+    @Override
+    public Operation negate() { return new LtOperation(left, right, !isNegated()); }
     
     public PropertyValue getLeft() { return left; }
     public PropertyValue getRight() { return right; }

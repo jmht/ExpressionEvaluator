@@ -9,6 +9,9 @@ public class OrOperation extends Operation {
         this.left = left;
         this.right = right;
     }
+
+    @Override
+    public Operation negate() { return new OrOperation(left, right, !isNegated()); }
     
     public Operation getLeft() { return left; }
     public Operation getRight() { return right; }

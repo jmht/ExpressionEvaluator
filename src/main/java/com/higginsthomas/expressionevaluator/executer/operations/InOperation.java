@@ -7,4 +7,7 @@ public class InOperation extends Operation {
         super(negate);
         this.c = c;
     }
+
+    @Override
+    public Operation negate() { return new InOperation(c, !isNegated()); }
 }

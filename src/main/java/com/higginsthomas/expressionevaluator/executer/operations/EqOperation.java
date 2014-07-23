@@ -10,6 +10,9 @@ public class EqOperation extends Operation {
         this.left = left;
         this.right = right;
     }
+
+    @Override
+    public Operation negate() { return new EqOperation(left, right, !isNegated()); }
     
     public PropertyValue getLeft() { return left; }
     public PropertyValue getRight() { return right; }

@@ -9,9 +9,9 @@ public class IdentifierValue implements PropertyValue {
     private final IdentifierCache cache;
     private final int identifierIndex;
     
-    public IdentifierValue(final IdentifierCache cache, final String identifier) {
+    public IdentifierValue(final IdentifierCache cache, final int identifier) {
         this.cache = cache;
-        this.identifierIndex = cache.getIdentifierIndex(identifier);
+        this.identifierIndex = identifier;
     }
 
     public PropertyValueType getType() {

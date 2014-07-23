@@ -3,12 +3,13 @@ package com.higginsthomas.expressionevaluator.compiler;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.math.BigInteger;
+
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.higginsthomas.expressionevaluator.PropertyMap;
-import com.higginsthomas.expressionevaluator.PropertyValueType;
+import com.higginsthomas.expressionevaluator.*;
 import com.higginsthomas.expressionevaluator.executer.operations.*;
 
 
@@ -29,8 +30,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
-        assert(result.getRight().getValue().equals(5));
         assertThat(result.isNegated(), is(false));
+        assertThat(result.getLeft(), instanceOf(IdentifierValue.class));
+        assertThat(result.getRight(), instanceOf(IntegerPropertyValue.class));
+        assertThat(((IntegerPropertyValue)result.getRight()).getValue().longValue(), equalTo(5L));
     }
 
     @Test
@@ -39,8 +42,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
-        assert(result.getLeft().getValue().equals(5));
         assertThat(result.isNegated(), is(false));
+        assertThat(result.getLeft(), instanceOf(IntegerPropertyValue.class));
+        assertThat(((IntegerPropertyValue)result.getLeft()).getValue().longValue(), equalTo(5L));
+        assertThat(result.getRight(), instanceOf(IdentifierValue.class));
     }
 
     @Test
@@ -49,8 +54,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
-        assert(result.getLeft().getValue().equals(5));
         assertThat(result.isNegated(), is(true));
+        assertThat(result.getLeft(), instanceOf(IdentifierValue.class));
+        assertThat(result.getRight(), instanceOf(IntegerPropertyValue.class));
+        assertThat(((IntegerPropertyValue)result.getRight()).getValue().longValue(), equalTo(5L));
     }
 
     @Test
@@ -59,8 +66,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
-        assert(result.getRight().getValue().equals(5));
         assertThat(result.isNegated(), is(true));
+        assertThat(result.getLeft(), instanceOf(IntegerPropertyValue.class));
+        assertThat(((IntegerPropertyValue)result.getLeft()).getValue().longValue(), equalTo(5L));
+        assertThat(result.getRight(), instanceOf(IdentifierValue.class));
     }
 
     @Test
@@ -69,8 +78,10 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         
         EqOperation result = (EqOperation)sut.visit(tree);
 
-        assert(result.getRight().getValue().equals(5));
         assertThat(result.isNegated(), is(false));
+        assertThat(result.getLeft(), instanceOf(IdentifierValue.class));
+        assertThat(result.getRight(), instanceOf(IntegerPropertyValue.class));
+        assertThat(((IntegerPropertyValue)result.getRight()).getValue().longValue(), equalTo(5L));
     }
 
     @Test
@@ -79,7 +90,9 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
        
         EqOperation result = (EqOperation)sut.visit(tree);
 
-        assert(result.getRight().getValue().equals(5));
         assertThat(result.isNegated(), is(true));
+        assertThat(result.getLeft(), instanceOf(IdentifierValue.class));
+        assertThat(result.getRight(), instanceOf(IntegerPropertyValue.class));
+        assertThat(((IntegerPropertyValue)result.getRight()).getValue().longValue(), equalTo(5L));
     }
 }

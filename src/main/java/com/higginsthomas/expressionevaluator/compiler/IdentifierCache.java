@@ -8,6 +8,7 @@ import java.util.Map;
 import com.higginsthomas.expressionevaluator.PropertyMap;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
+import com.higginsthomas.expressionevaluator.executer.operations.IdentifierValue;
 
 
 public class IdentifierCache {
@@ -62,10 +63,7 @@ public class IdentifierCache {
      * @return the identifier.
      */
     public PropertyValue getIdentifierAt(final int index) {
-        return new PropertyValue() {
-            public PropertyValueType getType() { return getIdentifierTypeAt(index); }
-            public Object getValue() { throw new UnsupportedOperationException(); }
-        };
+        return new IdentifierValue(this, index);
     }
 
     /**

@@ -25,7 +25,7 @@ public class IntermediateCompiler_SetTests extends IntermediateCompilerTestBase 
     
     @Test
     public void testRelation_InCollection_Set() {
-        ParseTree tree = parser("x in {1, 2, 3}").relation();
+        ParseTree tree = parser("x in {1, 2, 3}").start();
         
         InOperation result = (InOperation)sut.visit(tree);
     }

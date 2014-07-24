@@ -3,8 +3,6 @@ package com.higginsthomas.expressionevaluator.compiler;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import java.math.BigInteger;
-
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +24,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
 
     @Test
     public void testRelation_Compare_LT() {
-        ParseTree tree = parser("x < 5").relation();
+        ParseTree tree = parser("x < 5").start();
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
@@ -38,7 +36,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
 
     @Test
     public void testRelation_Compare_GT() {
-        ParseTree tree = parser("x > 5").relation();
+        ParseTree tree = parser("x > 5").start();
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
@@ -50,7 +48,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
 
     @Test
     public void testRelation_Compare_GE() {
-        ParseTree tree = parser("x >= 5").relation();
+        ParseTree tree = parser("x >= 5").start();
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
@@ -62,7 +60,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
 
     @Test
     public void testRelation_Compare_LE() {
-        ParseTree tree = parser("x <= 5").relation();
+        ParseTree tree = parser("x <= 5").start();
         
         LtOperation result = (LtOperation)sut.visit(tree);
 
@@ -74,7 +72,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
 
     @Test
     public void testRelation_Compare_EQ() {
-        ParseTree tree = parser("x = 5").relation();
+        ParseTree tree = parser("x = 5").start();
         
         EqOperation result = (EqOperation)sut.visit(tree);
 
@@ -86,7 +84,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
 
     @Test
     public void testRelation_Compare_NE() {
-        ParseTree tree = parser("x != 5").relation();
+        ParseTree tree = parser("x != 5").start();
        
         EqOperation result = (EqOperation)sut.visit(tree);
 

@@ -11,8 +11,8 @@ expr : ( not )* '(' expr ')'                    # notExpr
      ;
      
 relation : simpleValue operator simpleValue      # compare
-         | simpleValue 'in' collection              # inCollection
-         | simpleValue like STRING                  # regexCompare
+         | simpleValue 'in' collection           # inCollection
+         | simpleValue like STRING               # regexCompare
          ;
 
 collection : range

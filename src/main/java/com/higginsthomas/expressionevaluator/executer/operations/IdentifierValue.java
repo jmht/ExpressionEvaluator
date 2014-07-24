@@ -18,6 +18,10 @@ public class IdentifierValue implements PropertyValue {
         return cache.getIdentifierTypeAt(identifierIndex);
     }
 
+    public String getName() {
+        return cache.getIdentifierNameAt(identifierIndex);
+    }
+    
     public Object getValue() {
         throw new UnsupportedOperationException();
     }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashSet;
 
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
 import com.higginsthomas.expressionevaluator.*;
@@ -145,12 +146,18 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
 
     @Override
     public Object visitStrConstant(final ExpressionGrammarParser.StrConstantContext ctx) {
-        return new TextPropertyValue(ctx.getText());
+        String token = ctx.getText();
+        return new TextPropertyValue(token.substring(1, token.length() - 1));
     }
     
     @Override
     public Object visitDateConstant(final ExpressionGrammarParser.DateConstantContext ctx) {
-        return new DatePropertyValue(DateTimeFormat.forPattern("mm-dd-yyyy").parseLocalDate(ctx.getText()));
+        String dateString = ctx.getText();
+        if ( dateString.contains("-") ) {
+            return new DatePropertyValue(DateTimeFormat.forPattern("mm-dd-yyyy").parseLocalDate(ctx.getText()));
+        } else {
+            return new DatePropertyValue(DateTimeFormat.forPattern("mm/dd/yyyy").parseLocalDate(ctx.getText()));
+        }
     }
     
     @Override

@@ -28,5 +28,9 @@ public class IntermediateCompiler_SetTests extends IntermediateCompilerTestBase 
         ParseTree tree = parser("x in {1, 2, 3}").start();
         
         InOperation result = (InOperation)sut.visit(tree);
+
+        assertThat(result.isNegated(), is(false));
+        assertThat(result.getOperand(), instanceOf(IdentifierValue.class));
+        assertThat(result.getCollection(), instanceOf(SetValue.class));
     }
 }

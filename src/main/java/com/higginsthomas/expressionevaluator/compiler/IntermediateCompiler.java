@@ -2,6 +2,7 @@ package com.higginsthomas.expressionevaluator.compiler;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashSet;
 
 import org.joda.time.format.DateTimeFormat;
 
@@ -36,52 +37,26 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     
     @Override
     public Object visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
-//        visit(ctx.simpleValue());       // push left argument
-//        visit(ctx.collection());        // process collection
-//        return this;
-        return null;
+        PropertyValue operand = (PropertyValue)visit(ctx.simpleValue());
+        CollectionValue collection = (CollectionValue)visit(ctx.collection());
+        return new InOperation(operand, collection, false);
     }
 
     @Override
     public Object visitRange(final ExpressionGrammarParser.RangeContext ctx) {
-//        final int lb = 0;
-//        final int ub = 1;
-//        Operation operand = il_code.removeOperation();  // pop the first operand
-//        if ( ctx.lexcl != null ) {
-//            visit(ctx.constant(lb));            // push lower bound
-//            il_code.addOperation(operand);      // push our operand
-//            il_code.addOperation(IsLT.op());    // LT
-//        } else {
-//            il_code.addOperation(operand);      // push our operand
-//            visit(ctx.constant(lb));            // push lower bound
-//            il_code.addOperation(IsLT.op());    // ~LT
-//            il_code.addOperation(Not.op());
-//        }
-//        int andIp = il_code.addOperation(NOP.op());    // AND
-//        if ( ctx.rexcl != null ) {
-//            il_code.addOperation(operand);      // push our operand again
-//            visit(ctx.constant(ub));            // push upper bound
-//            il_code.addOperation(IsLT.op());    // LT
-//        } else {
-//            visit(ctx.constant(ub));            // push upper bound
-//            il_code.addOperation(operand);      // push our operand again
-//            il_code.addOperation(IsLT.op());    // ~LT
-//            il_code.addOperation(Not.op());
-//        }
-//        il_code.replaceOperation(andIp, JumpIfFalse.op(il_code.currentAddress() - andIp));
-//        return this;
-        return null;
+        return new RangeValue((PropertyValue)visit(ctx.constant(0)), 
+                (PropertyValue)visit(ctx.constant(1)), 
+                (ctx.lexcl != null), (ctx.rexcl != null));
     }
 
     @Override
     public Object visitSet(final ExpressionGrammarParser.SetContext ctx) {
-//        HashSet<PropertyValue> s = new HashSet<PropertyValue>();
-//        for ( ExpressionGrammarParser.ConstantContext x : ctx.constant()) {
-//            visit(x);
-//            //TODO: s.add(((LoadConstant)il_code.removeOperation()).getValue());
-//        }
-//        return this;
-        return null;
+        HashSet<PropertyValue> s = new HashSet<PropertyValue>();
+        for ( ExpressionGrammarParser.ConstantContext x : ctx.constant()) {
+            PropertyValue member = (PropertyValue)visit(x);
+            s.add(member);
+        }
+        return new SetValue(s);
     }
     
     @Override

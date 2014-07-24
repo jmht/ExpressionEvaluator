@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.antlr.v4.runtime.tree.ParseTree;

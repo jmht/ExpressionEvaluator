@@ -43,7 +43,7 @@ or : 'or' | '|' | '||';
 
 and : 'and' | '&' | '&&';
 
-not : 'not' | '~';
+not : 'not' | '~' | '!';
 
 eq : 'eq' | '=' | '==';
 
@@ -76,7 +76,7 @@ FLOAT : (INTEGER | DECIMAL ) ([eE] SIGN? DIGIT+);
 STRING : DQUOTE (CHAR | SQUOTE)*? DQUOTE
        | SQUOTE (CHAR | DQUOTE)*? SQUOTE;
        
-WS : [ \t\n\r]+ -> skip ;
+WS : [\u0000-\u0020]+ -> skip ;
 
 /* Token fragments */
 fragment SIGN : ('+' | '-');

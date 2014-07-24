@@ -12,7 +12,8 @@ import com.higginsthomas.expressionevaluator.executer.operations.*;
 
 
 public class IntermediateCompiler_BooleanTests extends
-        IntermediateCompilerTestBase {
+        IntermediateCompilerTestBase 
+{
     private IntermediateCompiler sut;
     
     @Before
@@ -48,5 +49,41 @@ public class IntermediateCompiler_BooleanTests extends
         assertThat(result.getLeft().isNegated(), is(true));
         assertThat(result.getRight(), instanceOf(LtOperation.class));
         assertThat(result.getRight().isNegated(), is(true));
+    }
+    
+    @Test
+    public void testBoolean_Compare_Not() {
+        ParseTree tree = parser("!(x = 5)").start();
+        
+        EqOperation result = (EqOperation)sut.visit(tree);
+
+        assertThat(result.isNegated(), is(true));
+    }
+    
+    @Test
+    public void testBoolean_Compare_NotNot() {
+        ParseTree tree = parser("!(x != 5)").start();
+        
+        EqOperation result = (EqOperation)sut.visit(tree);
+
+        assertThat(result.isNegated(), is(false));
+    }
+    
+    @Test
+    public void testBoolean_Not() {
+        ParseTree tree = parser("!(x = 5 or y < 0)").start();
+        
+        OrOperation result = (OrOperation)sut.visit(tree);
+
+        assertThat(result.isNegated(), is(true));
+    }
+    
+    @Test
+    public void testBoolean_NotNot() {
+        ParseTree tree = parser("!~(x = 5 or y < 0)").start();
+        
+        OrOperation result = (OrOperation)sut.visit(tree);
+
+        assertThat(result.isNegated(), is(true));
     }
 }

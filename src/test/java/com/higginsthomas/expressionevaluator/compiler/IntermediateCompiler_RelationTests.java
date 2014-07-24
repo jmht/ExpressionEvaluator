@@ -93,4 +93,15 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
         assertThat(result.getRight(), instanceOf(IntegerPropertyValue.class));
         assertThat(((IntegerPropertyValue)result.getRight()).getValue().longValue(), equalTo(5L));
     }
+
+    @Test
+    public void testBoolean_Like() {
+        ParseTree tree = parser("x like 'ab.*ba'").start();
+        
+        LikeOperation result = (LikeOperation)sut.visit(tree);
+
+        assertThat(result.isNegated(), is(false));
+        assertThat(result.getOperand(), instanceOf(PropertyValue.class));
+        assertThat(result.getPattern(), instanceOf(TextPropertyValue.class));
+    }
 }

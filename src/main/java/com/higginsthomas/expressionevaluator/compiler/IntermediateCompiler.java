@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashSet;
 
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
 import com.higginsthomas.expressionevaluator.*;
@@ -23,6 +22,11 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitNotExpr(final ExpressionGrammarParser.NotExprContext ctx) {
+        return ((Operation)visit(ctx.expr())).negate();
+    }
+
+    @Override
     public Object visitOrExpr(final ExpressionGrammarParser.OrExprContext ctx) {
         Operation left = (Operation)visit(ctx.expr(0));
         Operation right = (Operation)visit(ctx.expr(1));
@@ -37,10 +41,27 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     }
     
     @Override
+    public Object visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
+        final int left = 0;
+        final int right = 1;
+        return ((OperationBuilder<PropertyValue>)visit(ctx.operator()))
+                .setOperand(left, ((PropertyValue)visit(ctx.simpleValue(left))))
+                .setOperand(right, ((PropertyValue)visit(ctx.simpleValue(right)))).
+                make();
+    }
+    
+    @Override
     public Object visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
         PropertyValue operand = (PropertyValue)visit(ctx.simpleValue());
         CollectionValue collection = (CollectionValue)visit(ctx.collection());
         return new InOperation(operand, collection, false);
+    }
+    
+    @Override
+    public Object visitRegexCompare(final ExpressionGrammarParser.RegexCompareContext ctx) {
+        return new LikeOperation((PropertyValue)visit(ctx.simpleValue()), 
+                new TextPropertyValue(unencodeText(ctx.STRING().getText())),
+                false);
     }
 
     @Override
@@ -58,16 +79,6 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
             s.add(member);
         }
         return new SetValue(s);
-    }
-    
-    @Override
-    public Object visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
-        final int left = 0;
-        final int right = 1;
-        return ((OperationBuilder<PropertyValue>)visit(ctx.operator()))
-                .setOperand(left, ((PropertyValue)visit(ctx.simpleValue(left))))
-                .setOperand(right, ((PropertyValue)visit(ctx.simpleValue(right)))).
-                make();
     }
     
     @Override
@@ -146,8 +157,7 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
 
     @Override
     public Object visitStrConstant(final ExpressionGrammarParser.StrConstantContext ctx) {
-        String token = ctx.getText();
-        return new TextPropertyValue(token.substring(1, token.length() - 1));
+        return new TextPropertyValue(unencodeText(ctx.getText()));
     }
     
     @Override
@@ -163,5 +173,9 @@ class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     @Override
     protected Object aggregateResult(Object aggregate, Object nextResult) {
         return (nextResult != null) ? nextResult : aggregate;
+    }
+    
+    private String unencodeText(String encodedText) {
+        return encodedText.substring(1, encodedText.length() - 1);
     }
 }

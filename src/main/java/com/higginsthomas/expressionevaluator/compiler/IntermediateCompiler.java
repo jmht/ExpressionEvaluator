@@ -12,7 +12,7 @@ import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarBaseVisito
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
 
 
-class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
+public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
 //    private final PropertyMap identifierMap;
     private final IdentifierCache id_cache;
     

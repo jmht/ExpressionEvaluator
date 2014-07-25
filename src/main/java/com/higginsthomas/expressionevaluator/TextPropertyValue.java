@@ -16,4 +16,9 @@ public class TextPropertyValue implements PropertyValue {
     public PropertyValueType getType() { return PropertyValueType.TEXT; }
 
     public String getValue() { return value; }
+
+    public int compareTo(PropertyValue that) {
+        if ( !this.getType().equals(that.getType()) ) throw new RuntimeException("Cannot compare types");
+        return ((String)this.getValue()).compareTo((String)that.getValue());
+    }
 }

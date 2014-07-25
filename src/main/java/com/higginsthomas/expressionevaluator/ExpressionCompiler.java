@@ -1,11 +1,14 @@
 package com.higginsthomas.expressionevaluator;
 
+import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import com.higginsthomas.expressionevaluator.compiler.IntermediateCompiler;
-import com.higginsthomas.expressionevaluator.executer.operations.Operation;
+import com.higginsthomas.expressionevaluator.errors.ErrorListener;
+import com.higginsthomas.expressionevaluator.evaluator.Evaluator;
+import com.higginsthomas.expressionevaluator.evaluator.operations.Operation;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarLexer;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
 
@@ -17,6 +20,23 @@ import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
  * @author James Higgins-Thomas
  */
 public class ExpressionCompiler {
+    final ExpressionGrammarLexer lexer;
+    final CommonTokenStream tstream;
+    final ExpressionGrammarParser parser;
+
+    public ExpressionCompiler() {
+        this(new ErrorListener());
+    }
+
+    ExpressionCompiler(ANTLRErrorListener errorListener) {
+        this.lexer = new ExpressionGrammarLexer(null);
+        this.tstream = new CommonTokenStream(lexer);
+        this.parser = new ExpressionGrammarParser(tstream);
+        lexer.removeErrorListeners();
+        parser.removeErrorListeners();
+        parser.addErrorListener(new ErrorListener()); // TODO: Inject this instead?
+    }
+    
     /**
      * Compile query expression.
      * 
@@ -26,22 +46,10 @@ public class ExpressionCompiler {
      *         expression.
      */
     public ExpressionEvaluator compile(String queryExpression, PropertyMap map) {
-        final ANTLRInputStream istream = new ANTLRInputStream(queryExpression);
-        final ExpressionGrammarLexer lexer = new ExpressionGrammarLexer(null);
-        lexer.setInputStream(istream);
-        lexer.removeErrorListeners();
-        final CommonTokenStream tstream = new CommonTokenStream(lexer);
-        final ExpressionGrammarParser parser = new ExpressionGrammarParser(tstream);
-        parser.removeErrorListeners();
+        lexer.setInputStream(new ANTLRInputStream(queryExpression));
         final ParseTree parseTree = parser.start();
-        IntermediateCompiler compiler = new IntermediateCompiler(map);
-        final Operation expression = (Operation) compiler.visit(parseTree);
-        return new ExpressionEvaluator(/* TODO: expression */) {
-            public boolean evaluate(PropertySet properties) {
-// TODO:                return expression.evaluate(properties);
-                return false;
-            }
-        };
+        final IntermediateCompiler compiler = new IntermediateCompiler(map);
+        return new Evaluator((Operation) compiler.visit(parseTree));
     }
 
     /**

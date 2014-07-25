@@ -2,7 +2,7 @@ package com.higginsthomas.expressionevaluator.compiler;
 
 import java.util.ArrayList;
 
-import com.higginsthomas.expressionevaluator.executer.operations.Operation;
+import com.higginsthomas.expressionevaluator.evaluator.operations.Operation;
 
 
 public abstract class OperationBuilder<T> {

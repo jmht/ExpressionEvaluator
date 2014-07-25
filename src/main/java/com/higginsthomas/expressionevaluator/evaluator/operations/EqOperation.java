@@ -1,5 +1,6 @@
-package com.higginsthomas.expressionevaluator.executer.operations;
+package com.higginsthomas.expressionevaluator.evaluator.operations;
 
+import com.higginsthomas.expressionevaluator.PropertySet;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 
 public class EqOperation extends Operation {
@@ -16,4 +17,8 @@ public class EqOperation extends Operation {
     
     public PropertyValue getLeft() { return left; }
     public PropertyValue getRight() { return right; }
+
+    public boolean evaluate(PropertySet properties) {
+        return getLeft().compareTo(getRight()) == 0;
+    }
 }

@@ -6,7 +6,7 @@ package com.higginsthomas.expressionevaluator;
  * 
  * @author James Higgins-Thomas
  */
-public interface PropertyValue {
+public interface PropertyValue extends Comparable<PropertyValue> {
     /**
      * Return the logical type of the property.
      * 

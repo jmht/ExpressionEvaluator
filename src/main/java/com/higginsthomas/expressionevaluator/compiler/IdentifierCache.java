@@ -8,12 +8,12 @@ import java.util.Map;
 import com.higginsthomas.expressionevaluator.PropertyMap;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
-import com.higginsthomas.expressionevaluator.executer.operations.IdentifierValue;
+import com.higginsthomas.expressionevaluator.values.IdentifierValue;
 
 
 public class IdentifierCache {
     private final PropertyMap identifierMap;
-    private final List<String> identifiers = new ArrayList<String>();
+    private final List<IdentifierValue> identifiers = new ArrayList<IdentifierValue>();
     private final Map<String, Integer> id_map = new HashMap<String, Integer>();
     
     public IdentifierCache(final PropertyMap identifierMap) {
@@ -36,7 +36,7 @@ public class IdentifierCache {
         } else {
             if ( identifierMap.exists(identifier) ) {
                 index = identifiers.size();
-                identifiers.add(index, identifier);
+                identifiers.add(index, new IdentifierValue(this, index));
                 id_map.put(identifier, index);
             } else {
                 // TODO: How to handle bad identifier
@@ -47,23 +47,13 @@ public class IdentifierCache {
     }
 
     /**
-     * Return the name of the identifier at the specified identifier index.
-     * 
-     * @param index the identifier's index
-     * @return the identifier's name.
-     */
-    public String getIdentifierNameAt(int index) {
-        return identifiers.get(index);
-    }
-
-    /**
      * Return the identifier at the specified identifier index.
      * 
      * @param index the identifier's index
      * @return the identifier.
      */
     public PropertyValue getIdentifierAt(final int index) {
-        return new IdentifierValue(this, index);
+        return identifiers.get(index);
     }
 
     /**
@@ -73,6 +63,6 @@ public class IdentifierCache {
      * @return the identifier's type.
      */
     public PropertyValueType getIdentifierTypeAt(int index) {
-        return identifierMap.getType(getIdentifierNameAt(index));
+        return identifiers.get(index).getType();
     }
 }

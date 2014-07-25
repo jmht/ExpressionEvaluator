@@ -1,5 +1,6 @@
-package com.higginsthomas.expressionevaluator.executer.operations;
+package com.higginsthomas.expressionevaluator.evaluator.operations;
 
+import com.higginsthomas.expressionevaluator.PropertySet;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 
 
@@ -17,4 +18,9 @@ public class LtOperation extends Operation {
     
     public PropertyValue getLeft() { return left; }
     public PropertyValue getRight() { return right; }
+
+    public boolean evaluate(PropertySet properties) {
+        // TODO: Implement
+        return false;
+    }
 }

@@ -18,4 +18,9 @@ public class DecimalPropertyValue implements PropertyValue {
     public PropertyValueType getType() { return PropertyValueType.DECIMAL; }
 
     public BigDecimal getValue() { return value; }
+
+    public int compareTo(PropertyValue that) {
+        if ( !this.getType().equals(that.getType()) ) throw new RuntimeException("Cannot compare types");
+        return ((BigDecimal)this.getValue()).compareTo((BigDecimal)that.getValue());
+    }
 }

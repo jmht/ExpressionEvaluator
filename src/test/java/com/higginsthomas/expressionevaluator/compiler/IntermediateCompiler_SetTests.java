@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import com.higginsthomas.expressionevaluator.PropertyMap;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
-import com.higginsthomas.expressionevaluator.executer.operations.*;
+import com.higginsthomas.expressionevaluator.evaluator.operations.*;
+import com.higginsthomas.expressionevaluator.values.IdentifierValue;
+import com.higginsthomas.expressionevaluator.values.SetValue;
 
 
 public class IntermediateCompiler_SetTests extends IntermediateCompilerTestBase {

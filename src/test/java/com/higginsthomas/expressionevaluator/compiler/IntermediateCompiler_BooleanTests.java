@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.higginsthomas.expressionevaluator.*;
-import com.higginsthomas.expressionevaluator.executer.operations.*;
+import com.higginsthomas.expressionevaluator.evaluator.operations.*;
 
 
 public class IntermediateCompiler_BooleanTests extends

@@ -1,4 +1,6 @@
-package com.higginsthomas.expressionevaluator.executer.operations;
+package com.higginsthomas.expressionevaluator.evaluator.operations;
+
+import com.higginsthomas.expressionevaluator.PropertySet;
 
 
 public abstract class Operation {
@@ -8,4 +10,6 @@ public abstract class Operation {
     
     public abstract Operation negate();
     public boolean isNegated() { return negated; }
+    
+    public abstract boolean evaluate(PropertySet properties);
 }

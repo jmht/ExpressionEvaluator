@@ -1,5 +1,6 @@
 package com.higginsthomas.expressionevaluator;
 
+
 /**
  * Represents a property value of type FLOAT.
  * 
@@ -19,4 +20,9 @@ public class FloatPropertyValue implements PropertyValue {
     public PropertyValueType getType() { return PropertyValueType.FLOAT; }
 
     public Double getValue() { return value; }
+
+    public int compareTo(PropertyValue that) {
+        if ( !this.getType().equals(that.getType()) ) throw new RuntimeException("Cannot compare types");
+        return ((Double)this.getValue()).compareTo((Double)that.getValue());
+    }
 }

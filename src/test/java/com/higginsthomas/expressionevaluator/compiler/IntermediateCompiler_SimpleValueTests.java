@@ -13,7 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.higginsthomas.expressionevaluator.*;
-import com.higginsthomas.expressionevaluator.executer.operations.*;
+import com.higginsthomas.expressionevaluator.evaluator.operations.*;
+import com.higginsthomas.expressionevaluator.values.IdentifierValue;
 
 
 public class IntermediateCompiler_SimpleValueTests extends

@@ -1,7 +1,8 @@
-package com.higginsthomas.expressionevaluator.executer.operations;
+package com.higginsthomas.expressionevaluator.evaluator.operations;
 
 import java.util.regex.Pattern;
 
+import com.higginsthomas.expressionevaluator.PropertySet;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.TextPropertyValue;
 
@@ -23,4 +24,9 @@ public class LikeOperation extends Operation {
     
     public PropertyValue getOperand() { return operand; }
     public TextPropertyValue getPattern() { return patternString; }
+
+    public boolean evaluate(PropertySet properties) {
+        // TODO: Implement
+        return false;
+    }
 }

@@ -1,4 +1,6 @@
-package com.higginsthomas.expressionevaluator.executer.operations;
+package com.higginsthomas.expressionevaluator.evaluator.operations;
+
+import com.higginsthomas.expressionevaluator.PropertySet;
 
 
 public class OrOperation extends Operation {
@@ -15,4 +17,8 @@ public class OrOperation extends Operation {
     
     public Operation getLeft() { return left; }
     public Operation getRight() { return right; }
+
+    public boolean evaluate(PropertySet properties) {
+        return getLeft().evaluate(properties) || getRight().evaluate(properties);
+    }
 }

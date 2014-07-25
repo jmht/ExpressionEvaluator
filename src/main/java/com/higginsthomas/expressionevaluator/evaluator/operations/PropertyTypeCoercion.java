@@ -1,4 +1,4 @@
-package com.higginsthomas.expressionevaluator.executer.operations;
+package com.higginsthomas.expressionevaluator.evaluator.operations;
 
 import com.higginsthomas.expressionevaluator.PropertyValueType;
 

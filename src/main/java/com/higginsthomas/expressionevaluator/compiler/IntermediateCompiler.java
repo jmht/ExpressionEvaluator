@@ -7,7 +7,10 @@ import java.util.HashSet;
 import org.joda.time.format.DateTimeFormat;
 
 import com.higginsthomas.expressionevaluator.*;
-import com.higginsthomas.expressionevaluator.executer.operations.*;
+import com.higginsthomas.expressionevaluator.evaluator.operations.*;
+import com.higginsthomas.expressionevaluator.values.CollectionValue;
+import com.higginsthomas.expressionevaluator.values.RangeValue;
+import com.higginsthomas.expressionevaluator.values.SetValue;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarBaseVisitor;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
 

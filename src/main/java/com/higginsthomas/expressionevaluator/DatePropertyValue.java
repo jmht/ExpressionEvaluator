@@ -24,4 +24,9 @@ public class DatePropertyValue implements PropertyValue {
     public PropertyValueType getType() { return PropertyValueType.DATE; }
 
     public LocalDate getValue() { return value; }
+
+    public int compareTo(PropertyValue that) {
+        if ( !this.getType().equals(that.getType()) ) throw new RuntimeException("Cannot compare types");
+        return ((LocalDate)this.getValue()).compareTo((LocalDate)that.getValue());
+    }
 }

@@ -1,6 +1,8 @@
-package com.higginsthomas.expressionevaluator.executer.operations;
+package com.higginsthomas.expressionevaluator.evaluator.operations;
 
+import com.higginsthomas.expressionevaluator.PropertySet;
 import com.higginsthomas.expressionevaluator.PropertyValue;
+import com.higginsthomas.expressionevaluator.values.CollectionValue;
 
 
 public class InOperation extends Operation {
@@ -18,4 +20,9 @@ public class InOperation extends Operation {
     
     public PropertyValue getOperand() { return operand; }
     public CollectionValue getCollection() { return collection; }
+
+    public boolean evaluate(PropertySet properties) {
+        // TODO: Implement
+        return false;
+    }
 }

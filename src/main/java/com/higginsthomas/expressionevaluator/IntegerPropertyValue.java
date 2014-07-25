@@ -22,4 +22,9 @@ public class IntegerPropertyValue implements PropertyValue {
     public PropertyValueType getType() { return PropertyValueType.INTEGER; }
 
     public BigInteger getValue() { return value; }
+
+    public int compareTo(PropertyValue that) {
+        if ( !this.getType().equals(that.getType()) ) throw new RuntimeException("Cannot compare types");
+        return ((BigInteger)this.getValue()).compareTo((BigInteger)that.getValue());
+    }
 }

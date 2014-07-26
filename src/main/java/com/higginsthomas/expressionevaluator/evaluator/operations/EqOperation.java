@@ -1,7 +1,7 @@
 package com.higginsthomas.expressionevaluator.evaluator.operations;
 
-import com.higginsthomas.expressionevaluator.PropertySet;
 import com.higginsthomas.expressionevaluator.PropertyValue;
+import com.higginsthomas.expressionevaluator.values.IdentifierTable;
 
 public class EqOperation extends Operation {
     private final PropertyValue left, right;
@@ -18,7 +18,7 @@ public class EqOperation extends Operation {
     public PropertyValue getLeft() { return left; }
     public PropertyValue getRight() { return right; }
 
-    public boolean evaluate(PropertySet properties) {
+    public boolean evaluate(IdentifierTable properties) {
         return getLeft().compareTo(getRight()) == 0;
     }
 }

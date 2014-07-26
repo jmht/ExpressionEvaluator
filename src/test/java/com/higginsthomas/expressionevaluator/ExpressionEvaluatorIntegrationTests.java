@@ -27,7 +27,7 @@ public class ExpressionEvaluatorIntegrationTests {
                 public boolean exists(String propertyName) { return ( propertyName.equals("x")); }
                 public PropertyValueType getType(String propertyName) { return PropertyValueType.INTEGER; }
                 public PropertyValue get(String propertyName) { return new IntegerPropertyValue(1); }
-            }), 
-            equalTo(true));
+            }),
+            equalTo(false));
     }
 }

@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.higginsthomas.expressionevaluator.PropertyMap;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
+import com.higginsthomas.expressionevaluator.values.IdentifierTable;
 import com.higginsthomas.expressionevaluator.values.IdentifierValue;
 import com.higginsthomas.expressionevaluator.values.RangeValue;
 
@@ -19,7 +20,7 @@ public class IntermediateCompiler_RangeTests extends IntermediateCompilerTestBas
     
     @Before
     public void beforeEachTest() {
-        sut = new IntermediateCompiler(new PropertyMap() {
+        sut = new IntermediateCompiler(new IdentifierTable(), new PropertyMap() {
             public boolean exists(String propertyName) { return "x".equalsIgnoreCase(propertyName); }
             public PropertyValueType getType(String propertyName) { return PropertyValueType.INTEGER; }
         });

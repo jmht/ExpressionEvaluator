@@ -2,33 +2,30 @@ package com.higginsthomas.expressionevaluator.values;
 
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
-import com.higginsthomas.expressionevaluator.compiler.IdentifierCache;
 
 
 public class IdentifierValue implements PropertyValue {
-    private final IdentifierCache cache;
-    private final int identifierIndex;
-    private final String name;
+    private final IdentifierTable table;
+    private final int index;
     
-    public IdentifierValue(final IdentifierCache cache, final int identifier, final String name) {
-        this.cache = cache;
-        this.identifierIndex = identifier;
-        this.name = name;
+    public IdentifierValue(final IdentifierTable table, final int identifier) {
+        this.table = table;
+        this.index = identifier;
     }
 
     public PropertyValueType getType() {
-        return cache.getIdentifierTypeAt(identifierIndex);
+        return get().getType();
     }
     
     public Object getValue() {
-        throw new UnsupportedOperationException();
-    }
-    
-    public String getName() {
-        return name;
+        return get().getValue();
     }
 
     public int compareTo(PropertyValue that) {
-        throw new UnsupportedOperationException();
+        return get().compareTo(that);
+    }
+    
+    private PropertyValue get() {
+        return table.getIdentifier(index);
     }
 }

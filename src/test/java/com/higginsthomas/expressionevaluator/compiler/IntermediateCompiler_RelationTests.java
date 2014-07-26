@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.higginsthomas.expressionevaluator.*;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
+import com.higginsthomas.expressionevaluator.values.IdentifierTable;
 import com.higginsthomas.expressionevaluator.values.IdentifierValue;
 
 
@@ -17,7 +18,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
     
     @Before
     public void beforeEachTest() {
-        sut = new IntermediateCompiler(new PropertyMap() {
+        sut = new IntermediateCompiler(new IdentifierTable(), new PropertyMap() {
             public boolean exists(String propertyName) { return "x".equalsIgnoreCase(propertyName); }
             public PropertyValueType getType(String propertyName) { return PropertyValueType.INTEGER; }
         });

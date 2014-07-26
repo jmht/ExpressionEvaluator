@@ -9,6 +9,8 @@ import org.joda.time.format.DateTimeFormat;
 import com.higginsthomas.expressionevaluator.*;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
 import com.higginsthomas.expressionevaluator.values.CollectionValue;
+import com.higginsthomas.expressionevaluator.values.IdentifierTable;
+import com.higginsthomas.expressionevaluator.values.IdentifierValue;
 import com.higginsthomas.expressionevaluator.values.RangeValue;
 import com.higginsthomas.expressionevaluator.values.SetValue;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarBaseVisitor;
@@ -16,12 +18,13 @@ import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
 
 
 public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
-//    private final PropertyMap identifierMap;
-    private final IdentifierCache id_cache;
+    private final IdentifierTable idTable;
+    private final CompilerIdentifierTable id_cache;
     
-    public IntermediateCompiler(PropertyMap identifierMap) {
-//        this.identifierMap = identifierMap;
-        this.id_cache = new IdentifierCache(identifierMap);
+    public IntermediateCompiler(IdentifierTable idTable, PropertyMap identifierMap) {
+        this.idTable = idTable;
+        this.id_cache = new CompilerIdentifierTable(identifierMap);
+        idTable.setCache(id_cache);
     }
 
     @Override
@@ -140,7 +143,7 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     
     @Override
     public Object visitIdentifier(final ExpressionGrammarParser.IdentifierContext ctx) {
-        return id_cache.getIdentifierAt(id_cache.getIdentifierIndex(ctx.getText()));
+        return new IdentifierValue(idTable, id_cache.addIdentifier(ctx.getText()));
     }
 
     @Override

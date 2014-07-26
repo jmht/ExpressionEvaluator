@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.higginsthomas.expressionevaluator.*;
-import com.higginsthomas.expressionevaluator.evaluator.operations.*;
+import com.higginsthomas.expressionevaluator.values.IdentifierTable;
 import com.higginsthomas.expressionevaluator.values.IdentifierValue;
 
 
@@ -33,7 +33,7 @@ public class IntermediateCompiler_SimpleValueTests extends
     
     @Before
     public void beforeEachTest() {
-        sut = new IntermediateCompiler(new PropertyMap() {
+        sut = new IntermediateCompiler(new IdentifierTable(), new PropertyMap() {
             public boolean exists(String propertyName) { 
                 return idMap.containsKey(propertyName.toLowerCase()); 
             }
@@ -52,7 +52,6 @@ public class IntermediateCompiler_SimpleValueTests extends
     
             assertThat(result, instanceOf(IdentifierValue.class));
             IdentifierValue identifier = (IdentifierValue)result;
-            assertThat(identifier.getName(), equalTo(id));
             assertThat(identifier.getType(), equalTo(idMap.get(id)));
         }
     }

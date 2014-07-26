@@ -11,6 +11,7 @@ import com.higginsthomas.expressionevaluator.evaluator.Evaluator;
 import com.higginsthomas.expressionevaluator.evaluator.operations.Operation;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarLexer;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
+import com.higginsthomas.expressionevaluator.values.IdentifierTable;
 
 
 /**
@@ -48,8 +49,10 @@ public class ExpressionCompiler {
     public ExpressionEvaluator compile(String queryExpression, PropertyMap map) {
         lexer.setInputStream(new ANTLRInputStream(queryExpression));
         final ParseTree parseTree = parser.start();
-        final IntermediateCompiler compiler = new IntermediateCompiler(map);
-        return new Evaluator((Operation) compiler.visit(parseTree));
+        final IdentifierTable idTable = new IdentifierTable();
+        final IntermediateCompiler compiler = new IntermediateCompiler(idTable, map);
+        final Operation code = (Operation)compiler.visit(parseTree);
+        return new Evaluator(code, idTable);
     }
 
     /**

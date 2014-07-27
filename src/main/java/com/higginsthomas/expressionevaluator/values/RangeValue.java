@@ -16,8 +16,16 @@ public class RangeValue implements CollectionValue {
     }
     
     public PropertyValueType getType() {
-        // TODO Auto-generated method stub
-        return null;
+        // TODO fix this up
+        return min.getType();
+    }
+
+    @Override
+    public boolean contains(PropertyValue v) {
+        if ( min.compareTo(v) < 0 && v.compareTo(max) < 0 ) return true;
+        if ( minInclusive && min.compareTo(v) == 0 ) return true;
+        if ( maxInclusive && v.compareTo(max) == 0 ) return true;
+        return false;
     }
 
 }

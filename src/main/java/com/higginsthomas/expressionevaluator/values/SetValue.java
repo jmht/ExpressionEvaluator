@@ -17,4 +17,10 @@ public class SetValue implements CollectionValue {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public boolean contains(PropertyValue v) {
+        // TODO: This either requires values to be comparable or a different approach
+        return s.contains(v);
+    }
 }

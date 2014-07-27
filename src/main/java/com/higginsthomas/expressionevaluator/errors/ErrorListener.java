@@ -7,9 +7,13 @@ import org.antlr.v4.runtime.Recognizer;
 
 public class ErrorListener extends BaseErrorListener {
     public void syntaxError(Recognizer<?, ?> recognizer,
-            Object offendingSymbol, int line, int charPositionInLine,
-            String msg, RecognitionException e) {
-        // TODO Auto-generated method stub
-        int i = 55;
+                                    Object offendingSymbol, int line,
+                                    int charPositionInLine, String msg,
+                                    RecognitionException e) {
+        throw new RuntimeException(
+                String.format("%s at %d (%s)",
+                              msg,
+                              charPositionInLine + 1,
+                              offendingSymbol));
     }
 }

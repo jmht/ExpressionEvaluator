@@ -16,6 +16,6 @@ public class Evaluator implements ExpressionEvaluator {
     
     public boolean evaluate(final PropertySet properties) {
         idTable.setCache(new RuntimeIdentifierTable(idTable.getIdentifierTable(), properties));
-        return code.evaluate(idTable);
+        return code.evaluate();
     }
 }

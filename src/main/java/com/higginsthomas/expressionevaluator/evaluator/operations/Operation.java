@@ -1,7 +1,5 @@
 package com.higginsthomas.expressionevaluator.evaluator.operations;
 
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
-
 
 public abstract class Operation {
     private boolean negated;
@@ -11,5 +9,9 @@ public abstract class Operation {
     public abstract Operation negate();
     public boolean isNegated() { return negated; }
     
-    public abstract boolean evaluate(IdentifierTable properties);
+    public boolean evaluate() {
+        boolean result = getResult();
+        return isNegated() ? !result : result;
+    }
+    public abstract boolean getResult();
 }

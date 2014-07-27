@@ -46,6 +46,7 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
         return new OrOperation(left, right, true);
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public Object visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
         final int left = 0;
@@ -74,7 +75,7 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     public Object visitRange(final ExpressionGrammarParser.RangeContext ctx) {
         return new RangeValue((PropertyValue)visit(ctx.constant(0)), 
                 (PropertyValue)visit(ctx.constant(1)), 
-                (ctx.lexcl != null), (ctx.rexcl != null));
+                (ctx.lexcl == null), (ctx.rexcl == null));
     }
 
     @Override

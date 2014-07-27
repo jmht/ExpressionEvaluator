@@ -9,7 +9,6 @@ import com.higginsthomas.expressionevaluator.PropertyMap;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
 import com.higginsthomas.expressionevaluator.values.IdentifierCache;
-import com.higginsthomas.expressionevaluator.values.IdentifierValue;
 
 
 public class CompilerIdentifierTable implements IdentifierCache {
@@ -41,7 +40,7 @@ public class CompilerIdentifierTable implements IdentifierCache {
                 id_map.put(identifier, index);
             } else {
                 // TODO: How to handle bad identifier
-                return -1;
+                throw new RuntimeException("Unrecognized Identifier");
             }
         }
         return index;

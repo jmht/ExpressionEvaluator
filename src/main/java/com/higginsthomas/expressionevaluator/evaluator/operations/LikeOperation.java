@@ -4,7 +4,6 @@ import java.util.regex.Pattern;
 
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.TextPropertyValue;
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
 
 
 public class LikeOperation extends Operation {
@@ -25,8 +24,7 @@ public class LikeOperation extends Operation {
     public PropertyValue getOperand() { return operand; }
     public TextPropertyValue getPattern() { return patternString; }
 
-    public boolean evaluate(IdentifierTable properties) {
-        // TODO: Implement
-        return false;
+    public boolean getResult() {
+        return pattern.matcher((String)operand.getValue()).matches();
     }
 }

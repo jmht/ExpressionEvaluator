@@ -21,7 +21,7 @@ public class IdentifierValue implements PropertyValue {
         return get().getValue();
     }
 
-    public int compareTo(PropertyValue that) {
+    public int compareTo(final PropertyValue that) {
         return get().compareTo(that);
     }
     

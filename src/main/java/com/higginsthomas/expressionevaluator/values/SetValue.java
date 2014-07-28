@@ -9,7 +9,7 @@ import com.higginsthomas.expressionevaluator.PropertyValueType;
 public class SetValue implements CollectionValue {
     private final Set<PropertyValue> s;
     
-    public SetValue(Set<PropertyValue> s) {
+    public SetValue(final Set<PropertyValue> s) {
         this.s = s;
     }
 
@@ -19,7 +19,7 @@ public class SetValue implements CollectionValue {
     }
 
     @Override
-    public boolean contains(PropertyValue v) {
+    public boolean contains(final PropertyValue v) {
         // TODO: This either requires values to be comparable or a different approach
         return s.contains(v);
     }

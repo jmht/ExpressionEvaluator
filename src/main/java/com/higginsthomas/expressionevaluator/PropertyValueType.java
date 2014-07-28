@@ -19,10 +19,10 @@ package com.higginsthomas.expressionevaluator;
  * @author James Higgins-Thomas
  */
 public enum PropertyValueType {
-    VARIANT, 
-    TEXT, 
     INTEGER, 
     DECIMAL, 
     FLOAT, 
-    DATE
+    TEXT, 
+    DATE,
+    VARIANT 
 }

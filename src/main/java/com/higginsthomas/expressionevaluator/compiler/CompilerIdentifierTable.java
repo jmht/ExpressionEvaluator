@@ -8,7 +8,6 @@ import java.util.Map;
 import com.higginsthomas.expressionevaluator.PropertyMap;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
-import com.higginsthomas.expressionevaluator.errors.CompileException;
 import com.higginsthomas.expressionevaluator.values.IdentifierCache;
 
 
@@ -81,6 +80,7 @@ public class CompilerIdentifierTable implements IdentifierCache {
     }
     
     public class BadIdentifierException extends Exception {
+        private static final long serialVersionUID = 1L;
         public BadIdentifierException(String msg) {
             super(msg);
         }

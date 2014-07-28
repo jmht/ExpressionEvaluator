@@ -8,8 +8,8 @@ public class CompileException extends RuntimeException {
         super(makeMessage(msg, location));
     }
     
-    public CompileException(String msg, int location, Exception e) {
-        super(makeMessage(msg, location), e);
+    public CompileException(String msg, int location, Throwable t) {
+        super(makeMessage(msg, location), t);
     }
     
     private static String makeMessage(String msg, int location) {

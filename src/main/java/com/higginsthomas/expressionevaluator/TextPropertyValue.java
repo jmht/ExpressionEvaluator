@@ -1,5 +1,7 @@
 package com.higginsthomas.expressionevaluator;
 
+import com.higginsthomas.expressionevaluator.errors.IncompatibleTypeException;
+
 
 /**
  * Represents a property value of type TEXT.
@@ -18,7 +20,7 @@ public class TextPropertyValue implements PropertyValue {
     public String getValue() { return value; }
 
     public int compareTo(PropertyValue that) {
-        if ( !this.getType().equals(that.getType()) ) throw new RuntimeException("Cannot compare types");
+        if ( !this.getType().equals(that.getType()) ) throw new IncompatibleTypeException(this.getType(), that.getType());
         return ((String)this.getValue()).compareTo((String)that.getValue());
     }
 }

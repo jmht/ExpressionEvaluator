@@ -4,6 +4,8 @@ import java.util.Calendar;
 
 import org.joda.time.LocalDate;
 
+import com.higginsthomas.expressionevaluator.errors.IncompatibleTypeException;
+
 
 /**
  * Represents a property value of type DATE.
@@ -26,7 +28,7 @@ public class DatePropertyValue implements PropertyValue {
     public LocalDate getValue() { return value; }
 
     public int compareTo(PropertyValue that) {
-        if ( !this.getType().equals(that.getType()) ) throw new RuntimeException("Cannot compare types");
+        if ( !this.getType().equals(that.getType()) ) throw new IncompatibleTypeException(this.getType(), that.getType());
         return ((LocalDate)this.getValue()).compareTo((LocalDate)that.getValue());
     }
 }

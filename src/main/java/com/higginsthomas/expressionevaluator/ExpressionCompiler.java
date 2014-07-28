@@ -33,9 +33,11 @@ public class ExpressionCompiler {
         this.lexer = new ExpressionGrammarLexer(null);
         this.tstream = new CommonTokenStream(lexer);
         this.parser = new ExpressionGrammarParser(tstream);
+        ANTLRErrorListener listener = new ErrorListener(); // TODO: Inject this instead?
         lexer.removeErrorListeners();
+        lexer.addErrorListener(listener);
         parser.removeErrorListeners();
-        parser.addErrorListener(new ErrorListener()); // TODO: Inject this instead?
+        parser.addErrorListener(listener);
     }
     
     /**

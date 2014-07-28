@@ -7,6 +7,8 @@ import java.util.HashSet;
 import org.joda.time.format.DateTimeFormat;
 
 import com.higginsthomas.expressionevaluator.*;
+import com.higginsthomas.expressionevaluator.compiler.CompilerIdentifierTable.BadIdentifierException;
+import com.higginsthomas.expressionevaluator.errors.CompileException;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
 import com.higginsthomas.expressionevaluator.values.CollectionValue;
 import com.higginsthomas.expressionevaluator.values.IdentifierTable;
@@ -144,7 +146,11 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     
     @Override
     public Object visitIdentifier(final ExpressionGrammarParser.IdentifierContext ctx) {
-        return new IdentifierValue(idTable, id_cache.addIdentifier(ctx.getText()));
+        try {
+            return new IdentifierValue(idTable, id_cache.addIdentifier(ctx.getText()));
+        } catch ( BadIdentifierException e ) {
+            throw new CompileException(e.getMessage(), ctx.getStart().getCharPositionInLine(), e);
+        }
     }
 
     @Override

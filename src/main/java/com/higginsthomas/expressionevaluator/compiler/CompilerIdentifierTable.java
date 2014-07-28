@@ -8,6 +8,7 @@ import java.util.Map;
 import com.higginsthomas.expressionevaluator.PropertyMap;
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.PropertyValueType;
+import com.higginsthomas.expressionevaluator.errors.CompileException;
 import com.higginsthomas.expressionevaluator.values.IdentifierCache;
 
 
@@ -28,8 +29,9 @@ public class CompilerIdentifierTable implements IdentifierCache {
      * 
      * @param identifier the identifier
      * @return the identifier's index
+     * @throws BadIdentifierException 
      */
-    public int addIdentifier(String identifier) {
+    public int addIdentifier(String identifier) throws BadIdentifierException {
         int index;
         if ( id_map.containsKey(identifier) ) {
             index = id_map.get(identifier);
@@ -39,8 +41,7 @@ public class CompilerIdentifierTable implements IdentifierCache {
                 identifiers.add(index, new Identifier(identifier, identifierMap.getType(identifier)));
                 id_map.put(identifier, index);
             } else {
-                // TODO: How to handle bad identifier
-                throw new RuntimeException("Unrecognized Identifier");
+                throw new BadIdentifierException(String.format("Unrecognized identifier: %s", identifier));
             }
         }
         return index;
@@ -76,6 +77,12 @@ public class CompilerIdentifierTable implements IdentifierCache {
         public Identifier(String name, PropertyValueType type) {
             this.name = name;
             this.type = type;
+        }
+    }
+    
+    public class BadIdentifierException extends Exception {
+        public BadIdentifierException(String msg) {
+            super(msg);
         }
     }
 }

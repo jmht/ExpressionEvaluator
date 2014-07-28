@@ -10,10 +10,6 @@ public class ErrorListener extends BaseErrorListener {
                                     Object offendingSymbol, int line,
                                     int charPositionInLine, String msg,
                                     RecognitionException e) {
-        throw new RuntimeException(
-                String.format("%s at %d (%s)",
-                              msg,
-                              charPositionInLine + 1,
-                              offendingSymbol));
+        throw new CompileException(msg, charPositionInLine);
     }
 }

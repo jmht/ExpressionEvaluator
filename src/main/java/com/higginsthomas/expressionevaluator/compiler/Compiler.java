@@ -24,7 +24,7 @@ import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
  *
  * @author James Higgins-Thomas
  */
-public class Compiler implements ExpressionCompiler {
+public class Compiler extends ExpressionCompiler {
     final ExpressionGrammarLexer lexer;
     final CommonTokenStream tstream;
     final ExpressionGrammarParser parser;
@@ -44,9 +44,6 @@ public class Compiler implements ExpressionCompiler {
         parser.addErrorListener(listener);
     }
     
-    /* (non-Javadoc)
-     * @see com.higginsthomas.expressionevaluator.compiler.ExpressionCompiler#compile(java.lang.String, com.higginsthomas.expressionevaluator.properties.PropertyMap)
-     */
     @Override
     public ExpressionEvaluator compile(String queryExpression, PropertyMap map) throws CompileException {
         try {
@@ -61,9 +58,6 @@ public class Compiler implements ExpressionCompiler {
         }
     }
 
-    /* (non-Javadoc)
-     * @see com.higginsthomas.expressionevaluator.compiler.ExpressionCompiler#compile(java.lang.String)
-     */
     @Override
     public ExpressionEvaluator compile(String queryExpression) throws CompileException {
         return compile(queryExpression, new PropertyMap() {
@@ -77,9 +71,6 @@ public class Compiler implements ExpressionCompiler {
         });
     }
 
-    /* (non-Javadoc)
-     * @see com.higginsthomas.expressionevaluator.compiler.ExpressionCompiler#evaluate(java.lang.String, com.higginsthomas.expressionevaluator.properties.PropertySet)
-     */
     @Override
     public boolean evaluate(String queryExpression, PropertySet properties) throws CompileException {
         return compile(queryExpression, properties).evaluate(properties);

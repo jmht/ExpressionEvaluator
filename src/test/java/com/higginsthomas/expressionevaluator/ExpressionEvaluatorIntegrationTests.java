@@ -9,7 +9,6 @@ import org.junit.Test;
 import com.higginsthomas.expressionevaluator.api.CompileException;
 import com.higginsthomas.expressionevaluator.api.ExpressionCompiler;
 import com.higginsthomas.expressionevaluator.api.ExpressionEvaluator;
-import com.higginsthomas.expressionevaluator.main.Main;
 import com.higginsthomas.expressionevaluator.properties.PropertyMap;
 import com.higginsthomas.expressionevaluator.properties.PropertySet;
 
@@ -22,7 +21,7 @@ public class ExpressionEvaluatorIntegrationTests {
     
     @Before
     public void before() {
-        this.compiler = Main.compiler();
+        this.compiler = ExpressionCompiler.compiler();
         this.propertyMap = helper.getTestPropertyMap();
         this.propertySet = helper.getTestPropertySet();
     }

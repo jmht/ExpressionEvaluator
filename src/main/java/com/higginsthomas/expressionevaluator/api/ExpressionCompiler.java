@@ -1,10 +1,20 @@
 package com.higginsthomas.expressionevaluator.api;
 
+import com.higginsthomas.expressionevaluator.compiler.Compiler;
 import com.higginsthomas.expressionevaluator.properties.PropertyMap;
 import com.higginsthomas.expressionevaluator.properties.PropertySet;
 
 
-public interface ExpressionCompiler {
+public abstract class ExpressionCompiler {
+    /**
+     * Factory method to retrieve an instance of an <code>ExpressionCompiler</code>
+     * 
+     * @return <code>ExpressionCompiler</code>
+     */
+    public static ExpressionCompiler compiler() {
+        return new Compiler();
+    }
+
     /**
      * Compile query expression.
      * 
@@ -14,7 +24,7 @@ public interface ExpressionCompiler {
      *         expression.
      * @throws CompileException 
      */
-    ExpressionEvaluator compile(String queryExpression,
+    public abstract ExpressionEvaluator compile(String queryExpression,
             PropertyMap map) throws CompileException;
 
     /**
@@ -29,7 +39,7 @@ public interface ExpressionCompiler {
      *         expression.
      * @throws CompileException 
      */
-    ExpressionEvaluator compile(String queryExpression)
+    public abstract ExpressionEvaluator compile(String queryExpression)
             throws CompileException;
 
     /**
@@ -46,6 +56,6 @@ public interface ExpressionCompiler {
      * @return result of the evaluation
      * @throws CompileException     if unable to compile the expression
      */
-    boolean evaluate(String queryExpression,
+    public abstract boolean evaluate(String queryExpression,
             PropertySet properties) throws CompileException;
 }

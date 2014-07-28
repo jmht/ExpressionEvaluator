@@ -15,6 +15,10 @@ public class TextPropertyValue implements PropertyValue {
         this.value = value;
     }
 
+    public TextPropertyValue(char ch) {
+        this.value = String.valueOf(ch);
+    }
+
     public PropertyValueType getType() { return PropertyValueType.TEXT; }
 
     public String getValue() { return value; }

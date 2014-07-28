@@ -13,6 +13,8 @@ import com.higginsthomas.expressionevaluator.evaluator.operations.*;
 import com.higginsthomas.expressionevaluator.values.CollectionValue;
 import com.higginsthomas.expressionevaluator.values.IdentifierTable;
 import com.higginsthomas.expressionevaluator.values.IdentifierValue;
+import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion;
+import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
 import com.higginsthomas.expressionevaluator.values.RangeValue;
 import com.higginsthomas.expressionevaluator.values.SetValue;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarBaseVisitor;
@@ -43,8 +45,8 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     
     @Override
     public Object visitAndExpr(final ExpressionGrammarParser.AndExprContext ctx) {
-        Operation left = ((Operation)visit(ctx.expr(0))).negate();
-        Operation right = ((Operation)visit(ctx.expr(1))).negate();
+        final Operation left = ((Operation)visit(ctx.expr(0))).negate();
+        final Operation right = ((Operation)visit(ctx.expr(1))).negate();
         return new OrOperation(left, right, true);
     }
     
@@ -53,16 +55,23 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     public Object visitCompare(final ExpressionGrammarParser.CompareContext ctx) {
         final int left = 0;
         final int right = 1;
-        return ((OperationBuilder<PropertyValue>)visit(ctx.operator()))
-                .setOperand(left, ((PropertyValue)visit(ctx.simpleValue(left))))
-                .setOperand(right, ((PropertyValue)visit(ctx.simpleValue(right)))).
-                make();
+        final PropertyValue leftOperand = ((PropertyValue)visit(ctx.simpleValue(left)));
+        final PropertyValue rightOperand = ((PropertyValue)visit(ctx.simpleValue(right)));
+        try {
+            final PropertyValueType resultType = PropertyTypeConversion.computeResultType(leftOperand.getType(), rightOperand.getType());
+            return ((OperationBuilder<PropertyValue>)visit(ctx.operator()))
+                    .setOperand(left, PropertyTypeConversion.convert(leftOperand, resultType))
+                    .setOperand(right, PropertyTypeConversion.convert(rightOperand, resultType)).
+                    make();
+        } catch (TypeConversionException e) {
+            throw new CompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
+        }
     }
     
     @Override
     public Object visitInCollection(final ExpressionGrammarParser.InCollectionContext ctx) {
-        PropertyValue operand = (PropertyValue)visit(ctx.simpleValue());
-        CollectionValue collection = (CollectionValue)visit(ctx.collection());
+        final PropertyValue operand = (PropertyValue)visit(ctx.simpleValue());
+        final CollectionValue collection = (CollectionValue)visit(ctx.collection());
         return new InOperation(operand, collection, false);
     }
     
@@ -75,9 +84,13 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
 
     @Override
     public Object visitRange(final ExpressionGrammarParser.RangeContext ctx) {
-        return new RangeValue((PropertyValue)visit(ctx.constant(0)), 
-                (PropertyValue)visit(ctx.constant(1)), 
-                (ctx.lexcl == null), (ctx.rexcl == null));
+        try {
+            return new RangeValue((PropertyValue)visit(ctx.constant(0)), 
+                    (PropertyValue)visit(ctx.constant(1)), 
+                    (ctx.lexcl == null), (ctx.rexcl == null));
+        } catch (TypeConversionException e) {
+            throw new CompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
+        }
     }
 
     @Override
@@ -87,7 +100,11 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
             PropertyValue member = (PropertyValue)visit(x);
             s.add(member);
         }
-        return new SetValue(s);
+        try {
+            return new SetValue(s);
+        } catch (TypeConversionException e) {
+            throw new CompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
+        }
     }
     
     @Override

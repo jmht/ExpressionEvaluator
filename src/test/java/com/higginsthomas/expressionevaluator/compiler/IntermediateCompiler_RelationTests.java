@@ -97,7 +97,7 @@ public class IntermediateCompiler_RelationTests extends IntermediateCompilerTest
     }
 
     @Test
-    public void testBoolean_Like() {
+    public void testRelation_Like() {
         ParseTree tree = parser("x like 'ab.*ba'").start();
         
         LikeOperation result = (LikeOperation)sut.visit(tree);

@@ -1,5 +1,10 @@
 package com.higginsthomas.expressionevaluator.evaluator.operations;
 
+import com.higginsthomas.expressionevaluator.PropertyValue;
+import com.higginsthomas.expressionevaluator.PropertyValueType;
+import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion;
+import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
+
 
 public abstract class Operation {
     private boolean negated;
@@ -9,9 +14,22 @@ public abstract class Operation {
     public abstract Operation negate();
     public boolean isNegated() { return negated; }
     
-    public boolean evaluate() {
-        boolean result = getResult();
-        return isNegated() ? !result : result;
+    protected PropertyValueType computeResultType(PropertyValueType a,
+            PropertyValueType b) throws TypeConversionException 
+    {
+        return PropertyTypeConversion.computeResultType(a, b);
     }
-    public abstract boolean getResult();
+    protected PropertyValue convert(PropertyValue v, PropertyValueType t) throws TypeConversionException {
+        return PropertyTypeConversion.convert(v, t);
+    }
+
+    public boolean evaluate() {
+        try {
+            boolean result = getResult();
+            return isNegated() ? !result : result;
+        } catch ( TypeConversionException e ) {
+            return false;
+        }
+    }
+    protected abstract boolean getResult() throws TypeConversionException;
 }

@@ -10,37 +10,39 @@ import com.higginsthomas.expressionevaluator.*;
 
 public class PropertyTypeConversion {
     public static PropertyValueType computeResultType(PropertyValueType a,
-            PropertyValueType t) throws TypeConversionException
+            PropertyValueType b) throws TypeConversionException
     {
         switch ( a ) {
         case VARIANT:
-            return t;
+            return b;
             
         case TEXT:
-            if ( t == PropertyValueType.VARIANT ) return PropertyValueType.TEXT;
-            return t;
+            if ( b == PropertyValueType.VARIANT ) return PropertyValueType.TEXT;
+            return b;
             
         case DATE:
-            if ( t == PropertyValueType.DATE ) return PropertyValueType.DATE;
+            if (   (b == PropertyValueType.DATE)
+                || (b == PropertyValueType.TEXT)
+                || (b == PropertyValueType.VARIANT) ) return PropertyValueType.DATE;
             break;
         
         case FLOAT:
-            if ( t == PropertyValueType.DATE ) break;
+            if ( b == PropertyValueType.DATE ) break;
             return PropertyValueType.FLOAT;
          
         case DECIMAL:
-            if ( t == PropertyValueType.DATE ) break;
-            if ( t == PropertyValueType.FLOAT ) return PropertyValueType.FLOAT;
+            if ( b == PropertyValueType.DATE ) break;
+            if ( b == PropertyValueType.FLOAT ) return PropertyValueType.FLOAT;
             return PropertyValueType.DECIMAL;
             
         case INTEGER:
-            if ( t == PropertyValueType.DATE ) break;
-            if ( t == PropertyValueType.FLOAT ) return PropertyValueType.FLOAT;
-            if ( t == PropertyValueType.DECIMAL ) return PropertyValueType.DECIMAL;
+            if ( b == PropertyValueType.DATE ) break;
+            if ( b == PropertyValueType.FLOAT ) return PropertyValueType.FLOAT;
+            if ( b == PropertyValueType.DECIMAL ) return PropertyValueType.DECIMAL;
             return PropertyValueType.INTEGER;
         }
         
-        throw new TypeConversionException(String.format("Types %s and %s are incompatible", a, t));
+        throw new TypeConversionException(String.format("Types %s and %s are incompatible", a, b));
     }
     
     @SuppressWarnings("incomplete-switch")

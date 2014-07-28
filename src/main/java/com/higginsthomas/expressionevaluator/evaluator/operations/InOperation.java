@@ -2,6 +2,7 @@ package com.higginsthomas.expressionevaluator.evaluator.operations;
 
 import com.higginsthomas.expressionevaluator.PropertyValue;
 import com.higginsthomas.expressionevaluator.values.CollectionValue;
+import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
 
 
 public class InOperation extends Operation {
@@ -20,7 +21,8 @@ public class InOperation extends Operation {
     public PropertyValue getOperand() { return operand; }
     public CollectionValue getCollection() { return collection; }
 
-    public boolean getResult() {
+    public boolean getResult() throws TypeConversionException {
+        final PropertyValue operand = convert(getOperand(), getCollection().getType());
         return collection.contains(operand);
     }
 }

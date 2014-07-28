@@ -1,6 +1,8 @@
 package com.higginsthomas.expressionevaluator.evaluator.operations;
 
 import com.higginsthomas.expressionevaluator.PropertyValue;
+import com.higginsthomas.expressionevaluator.PropertyValueType;
+import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
 
 
 public class EqOperation extends Operation {
@@ -19,7 +21,10 @@ public class EqOperation extends Operation {
     public PropertyValue getRight() { return right; }
 
     @Override
-    public boolean getResult() {
-        return getLeft().compareTo(getRight()) == 0;
+    public boolean getResult() throws TypeConversionException {
+        PropertyValueType opType = computeResultType(getLeft().getType(), getRight().getType());
+        final PropertyValue left = convert(getLeft(), opType);
+        final PropertyValue right = convert(getRight(), opType);
+        return left.compareTo(right) == 0;
     }
 }

@@ -3,7 +3,9 @@ package com.higginsthomas.expressionevaluator.evaluator.operations;
 import java.util.regex.Pattern;
 
 import com.higginsthomas.expressionevaluator.PropertyValue;
+import com.higginsthomas.expressionevaluator.PropertyValueType;
 import com.higginsthomas.expressionevaluator.TextPropertyValue;
+import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
 
 
 public class LikeOperation extends Operation {
@@ -24,7 +26,8 @@ public class LikeOperation extends Operation {
     public PropertyValue getOperand() { return operand; }
     public TextPropertyValue getPattern() { return patternString; }
 
-    public boolean getResult() {
+    public boolean getResult() throws TypeConversionException {
+        final PropertyValue operand = convert(getOperand(), PropertyValueType.TEXT);
         return pattern.matcher((String)operand.getValue()).matches();
     }
 }

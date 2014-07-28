@@ -7,10 +7,16 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.higginsthomas.expressionevaluator.*;
+import com.higginsthomas.expressionevaluator.collection.RangeValue;
+import com.higginsthomas.expressionevaluator.collection.SetValue;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
-import com.higginsthomas.expressionevaluator.values.*;
-import com.higginsthomas.expressionevaluator.errors.CompileException;
+import com.higginsthomas.expressionevaluator.properties.DatePropertyValue;
+import com.higginsthomas.expressionevaluator.properties.DecimalPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.FloatPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.IntegerPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
+import com.higginsthomas.expressionevaluator.identifiers.*;
 
 
 public class IntermediateCompiler_TypeConversionTests extends IntermediateCompilerTestBase {
@@ -46,7 +52,7 @@ public class IntermediateCompiler_TypeConversionTests extends IntermediateCompil
         assertThat(result.getRight(), instanceOf(FloatPropertyValue.class));
     }
 
-    @Test(expected= CompileException.class)
+    @Test(expected= InternalCompileException.class)
     public void testRelation_TypeConversion_Integer_Date() {
         ParseTree tree = parser("3 eq 3/14/2014").start();
         
@@ -75,7 +81,7 @@ public class IntermediateCompiler_TypeConversionTests extends IntermediateCompil
         assertThat(result.getRight(), instanceOf(FloatPropertyValue.class));
     }
 
-    @Test(expected= CompileException.class)
+    @Test(expected= InternalCompileException.class)
     public void testRelation_TypeConversion_Decimal_Date() {
         ParseTree tree = parser("3. eq 3/14/2014").start();
         
@@ -93,7 +99,7 @@ public class IntermediateCompiler_TypeConversionTests extends IntermediateCompil
         assertThat(result.getRight(), instanceOf(DecimalPropertyValue.class));
     }
 
-    @Test(expected= CompileException.class)
+    @Test(expected= InternalCompileException.class)
     public void testRelation_TypeConversion_Float_Date() {
         ParseTree tree = parser("3e0 eq 3/14/2014").start();
         

@@ -1,11 +1,17 @@
-package com.higginsthomas.expressionevaluator.values;
+package com.higginsthomas.expressionevaluator.common;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.joda.time.format.DateTimeFormat;
 
-import com.higginsthomas.expressionevaluator.*;
+import com.higginsthomas.expressionevaluator.properties.DatePropertyValue;
+import com.higginsthomas.expressionevaluator.properties.DecimalPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.FloatPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.IntegerPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
+import com.higginsthomas.expressionevaluator.properties.TextPropertyValue;
 
 
 public class PropertyTypeConversion {

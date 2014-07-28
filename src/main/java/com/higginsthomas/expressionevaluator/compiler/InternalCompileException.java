@@ -1,14 +1,14 @@
-package com.higginsthomas.expressionevaluator.errors;
+package com.higginsthomas.expressionevaluator.compiler;
 
 
-public class CompileException extends RuntimeException {
+public class InternalCompileException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     
-    public CompileException(String msg, int location) {
+    public InternalCompileException(String msg, int location) {
         super(makeMessage(msg, location));
     }
     
-    public CompileException(String msg, int location, Throwable t) {
+    public InternalCompileException(String msg, int location, Throwable t) {
         super(makeMessage(msg, location), t);
     }
     

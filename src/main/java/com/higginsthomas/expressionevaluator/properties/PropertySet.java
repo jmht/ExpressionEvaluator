@@ -1,4 +1,4 @@
-package com.higginsthomas.expressionevaluator;
+package com.higginsthomas.expressionevaluator.properties;
 
 
 /**

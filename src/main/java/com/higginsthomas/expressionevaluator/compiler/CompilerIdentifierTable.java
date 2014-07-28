@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.higginsthomas.expressionevaluator.PropertyMap;
-import com.higginsthomas.expressionevaluator.PropertyValue;
-import com.higginsthomas.expressionevaluator.PropertyValueType;
-import com.higginsthomas.expressionevaluator.values.IdentifierCache;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierCache;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
 public class CompilerIdentifierTable implements IdentifierCache {

@@ -1,8 +1,8 @@
-package com.higginsthomas.expressionevaluator;
+package com.higginsthomas.expressionevaluator.properties;
 
 import java.math.BigDecimal;
 
-import com.higginsthomas.expressionevaluator.errors.IncompatibleTypeException;
+import com.higginsthomas.expressionevaluator.common.IncompatibleTypeException;
 
 
 /**

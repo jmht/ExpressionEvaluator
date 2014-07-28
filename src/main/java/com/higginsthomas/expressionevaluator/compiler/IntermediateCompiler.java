@@ -6,19 +6,25 @@ import java.util.HashSet;
 
 import org.joda.time.format.DateTimeFormat;
 
-import com.higginsthomas.expressionevaluator.*;
+import com.higginsthomas.expressionevaluator.collection.CollectionValue;
+import com.higginsthomas.expressionevaluator.collection.RangeValue;
+import com.higginsthomas.expressionevaluator.collection.SetValue;
+import com.higginsthomas.expressionevaluator.common.PropertyTypeConversion;
+import com.higginsthomas.expressionevaluator.common.PropertyTypeConversion.TypeConversionException;
 import com.higginsthomas.expressionevaluator.compiler.CompilerIdentifierTable.BadIdentifierException;
-import com.higginsthomas.expressionevaluator.errors.CompileException;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
-import com.higginsthomas.expressionevaluator.values.CollectionValue;
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
-import com.higginsthomas.expressionevaluator.values.IdentifierValue;
-import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion;
-import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
-import com.higginsthomas.expressionevaluator.values.RangeValue;
-import com.higginsthomas.expressionevaluator.values.SetValue;
+import com.higginsthomas.expressionevaluator.properties.DatePropertyValue;
+import com.higginsthomas.expressionevaluator.properties.DecimalPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.FloatPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.IntegerPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
+import com.higginsthomas.expressionevaluator.properties.TextPropertyValue;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarBaseVisitor;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarParser;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierTable;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierValue;
 
 
 public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
@@ -64,7 +70,7 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
                     .setOperand(right, PropertyTypeConversion.convert(rightOperand, resultType)).
                     make();
         } catch (TypeConversionException e) {
-            throw new CompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
+            throw new InternalCompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
         }
     }
     
@@ -89,7 +95,7 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
                     (PropertyValue)visit(ctx.constant(1)), 
                     (ctx.lexcl == null), (ctx.rexcl == null));
         } catch (TypeConversionException e) {
-            throw new CompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
+            throw new InternalCompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
         }
     }
 
@@ -103,7 +109,7 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
         try {
             return new SetValue(s);
         } catch (TypeConversionException e) {
-            throw new CompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
+            throw new InternalCompileException(e.getMessage(), ctx.start.getCharPositionInLine(), e);
         }
     }
     
@@ -166,7 +172,7 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
         try {
             return new IdentifierValue(idTable, id_cache.addIdentifier(ctx.getText()));
         } catch ( BadIdentifierException e ) {
-            throw new CompileException(e.getMessage(), ctx.getStart().getCharPositionInLine(), e);
+            throw new InternalCompileException(e.getMessage(), ctx.getStart().getCharPositionInLine(), e);
         }
     }
 

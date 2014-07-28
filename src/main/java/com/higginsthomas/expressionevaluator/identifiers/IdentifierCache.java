@@ -1,6 +1,6 @@
-package com.higginsthomas.expressionevaluator.values;
+package com.higginsthomas.expressionevaluator.identifiers;
 
-import com.higginsthomas.expressionevaluator.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
 
 
 public interface IdentifierCache {

@@ -4,6 +4,16 @@ import java.math.BigDecimal;
 
 import org.joda.time.LocalDate;
 
+import com.higginsthomas.expressionevaluator.properties.DatePropertyValue;
+import com.higginsthomas.expressionevaluator.properties.DecimalPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.FloatPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.IntegerPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertySet;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
+import com.higginsthomas.expressionevaluator.properties.TextPropertyValue;
+
 
 public class TestHelper {
     private static final TestData testData[] = {

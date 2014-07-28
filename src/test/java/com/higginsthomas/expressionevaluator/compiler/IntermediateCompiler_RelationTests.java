@@ -7,10 +7,14 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.higginsthomas.expressionevaluator.*;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
-import com.higginsthomas.expressionevaluator.values.IdentifierValue;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierTable;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierValue;
+import com.higginsthomas.expressionevaluator.properties.IntegerPropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
+import com.higginsthomas.expressionevaluator.properties.TextPropertyValue;
 
 
 public class IntermediateCompiler_RelationTests extends IntermediateCompilerTestBase {

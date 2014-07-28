@@ -1,7 +1,7 @@
-package com.higginsthomas.expressionevaluator.values;
+package com.higginsthomas.expressionevaluator.identifiers;
 
-import com.higginsthomas.expressionevaluator.PropertyValue;
-import com.higginsthomas.expressionevaluator.PropertyValueType;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
 public class IdentifierValue implements PropertyValue {

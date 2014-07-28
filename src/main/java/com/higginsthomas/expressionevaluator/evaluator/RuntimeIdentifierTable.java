@@ -1,8 +1,8 @@
 package com.higginsthomas.expressionevaluator.evaluator;
 
-import com.higginsthomas.expressionevaluator.PropertySet;
-import com.higginsthomas.expressionevaluator.PropertyValue;
-import com.higginsthomas.expressionevaluator.values.IdentifierCache;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierCache;
+import com.higginsthomas.expressionevaluator.properties.PropertySet;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
 
 
 public class RuntimeIdentifierTable implements IdentifierCache {

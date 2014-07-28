@@ -7,12 +7,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.higginsthomas.expressionevaluator.PropertyMap;
-import com.higginsthomas.expressionevaluator.PropertyValueType;
+import com.higginsthomas.expressionevaluator.collection.RangeValue;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
-import com.higginsthomas.expressionevaluator.values.IdentifierValue;
-import com.higginsthomas.expressionevaluator.values.RangeValue;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierTable;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
 public class IntermediateCompiler_RangeTests extends IntermediateCompilerTestBase {

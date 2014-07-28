@@ -1,8 +1,8 @@
 package com.higginsthomas.expressionevaluator.evaluator.operations;
 
-import com.higginsthomas.expressionevaluator.PropertyValue;
-import com.higginsthomas.expressionevaluator.values.CollectionValue;
-import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
+import com.higginsthomas.expressionevaluator.collection.CollectionValue;
+import com.higginsthomas.expressionevaluator.common.PropertyTypeConversion.TypeConversionException;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
 
 
 public class InOperation extends Operation {

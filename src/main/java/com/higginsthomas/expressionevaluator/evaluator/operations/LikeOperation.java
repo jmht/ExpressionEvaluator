@@ -2,10 +2,10 @@ package com.higginsthomas.expressionevaluator.evaluator.operations;
 
 import java.util.regex.Pattern;
 
-import com.higginsthomas.expressionevaluator.PropertyValue;
-import com.higginsthomas.expressionevaluator.PropertyValueType;
-import com.higginsthomas.expressionevaluator.TextPropertyValue;
-import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
+import com.higginsthomas.expressionevaluator.common.PropertyTypeConversion.TypeConversionException;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
+import com.higginsthomas.expressionevaluator.properties.TextPropertyValue;
 
 
 public class LikeOperation extends Operation {

@@ -7,9 +7,10 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.higginsthomas.expressionevaluator.*;
 import com.higginsthomas.expressionevaluator.evaluator.operations.*;
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierTable;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
 public class IntermediateCompiler_BooleanTests extends

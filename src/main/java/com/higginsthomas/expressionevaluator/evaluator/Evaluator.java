@@ -1,9 +1,10 @@
 package com.higginsthomas.expressionevaluator.evaluator;
 
-import com.higginsthomas.expressionevaluator.ExpressionEvaluator;
-import com.higginsthomas.expressionevaluator.PropertySet;
+import com.higginsthomas.expressionevaluator.api.ExpressionEvaluator;
 import com.higginsthomas.expressionevaluator.evaluator.operations.Operation;
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierTable;
+import com.higginsthomas.expressionevaluator.properties.PropertySet;
+
 
 public class Evaluator implements ExpressionEvaluator {
     private final Operation code;

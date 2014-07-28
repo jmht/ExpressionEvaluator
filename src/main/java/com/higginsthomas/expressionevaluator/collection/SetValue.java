@@ -1,11 +1,12 @@
-package com.higginsthomas.expressionevaluator.values;
+package com.higginsthomas.expressionevaluator.collection;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.higginsthomas.expressionevaluator.PropertyValue;
-import com.higginsthomas.expressionevaluator.PropertyValueType;
-import com.higginsthomas.expressionevaluator.values.PropertyTypeConversion.TypeConversionException;
+import com.higginsthomas.expressionevaluator.common.PropertyTypeConversion;
+import com.higginsthomas.expressionevaluator.common.PropertyTypeConversion.TypeConversionException;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
 public class SetValue implements CollectionValue {

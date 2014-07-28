@@ -12,9 +12,11 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.higginsthomas.expressionevaluator.*;
-import com.higginsthomas.expressionevaluator.values.IdentifierTable;
-import com.higginsthomas.expressionevaluator.values.IdentifierValue;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierTable;
+import com.higginsthomas.expressionevaluator.identifiers.IdentifierValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyMap;
+import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
 public class IntermediateCompiler_SimpleValueTests extends

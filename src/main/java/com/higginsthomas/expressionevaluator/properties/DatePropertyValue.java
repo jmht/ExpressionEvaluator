@@ -1,10 +1,10 @@
-package com.higginsthomas.expressionevaluator;
+package com.higginsthomas.expressionevaluator.properties;
 
 import java.util.Calendar;
 
 import org.joda.time.LocalDate;
 
-import com.higginsthomas.expressionevaluator.errors.IncompatibleTypeException;
+import com.higginsthomas.expressionevaluator.common.IncompatibleTypeException;
 
 
 /**

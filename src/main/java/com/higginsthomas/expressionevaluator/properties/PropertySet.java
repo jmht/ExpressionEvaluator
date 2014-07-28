@@ -1,6 +1,7 @@
 package com.higginsthomas.expressionevaluator.properties;
 
 
+
 /**
  * Represents a set of functions over the set of valid properties for the query.
  * <p>

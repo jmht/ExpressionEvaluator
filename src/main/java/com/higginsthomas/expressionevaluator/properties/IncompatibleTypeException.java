@@ -1,6 +1,5 @@
-package com.higginsthomas.expressionevaluator.common;
+package com.higginsthomas.expressionevaluator.properties;
 
-import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
 public class IncompatibleTypeException extends RuntimeException {

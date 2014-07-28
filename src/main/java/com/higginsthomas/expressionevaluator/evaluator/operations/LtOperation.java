@@ -1,8 +1,8 @@
 package com.higginsthomas.expressionevaluator.evaluator.operations;
 
-import com.higginsthomas.expressionevaluator.common.PropertyTypeConversion.TypeConversionException;
 import com.higginsthomas.expressionevaluator.properties.PropertyValue;
 import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
+import com.higginsthomas.expressionevaluator.properties.PropertyTypeConversion.TypeConversionException;
 
 
 public class LtOperation extends Operation {

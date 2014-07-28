@@ -6,8 +6,9 @@ package com.higginsthomas.expressionevaluator;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.higginsthomas.expressionevaluator.api.ExpressionCompiler;
 import com.higginsthomas.expressionevaluator.api.CompileException;
+import com.higginsthomas.expressionevaluator.api.ExpressionCompiler;
+import com.higginsthomas.expressionevaluator.compiler.Compiler;
 import com.higginsthomas.expressionevaluator.properties.PropertyMap;
 
 
@@ -18,7 +19,7 @@ public class ExpressionEvaluationCompileExceptionTests {
     
     @Before
     public void before() {
-        this.compiler = new ExpressionCompiler();
+        this.compiler = new Compiler();
         this.propertyMap = helper.getTestPropertyMap();
     }
 

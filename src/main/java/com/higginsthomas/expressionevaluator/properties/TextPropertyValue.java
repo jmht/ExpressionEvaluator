@@ -1,6 +1,5 @@
 package com.higginsthomas.expressionevaluator.properties;
 
-import com.higginsthomas.expressionevaluator.common.IncompatibleTypeException;
 
 
 

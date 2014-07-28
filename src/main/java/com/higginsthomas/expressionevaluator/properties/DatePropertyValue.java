@@ -4,8 +4,6 @@ import java.util.Calendar;
 
 import org.joda.time.LocalDate;
 
-import com.higginsthomas.expressionevaluator.common.IncompatibleTypeException;
-
 
 /**
  * Represents a property value of type DATE.

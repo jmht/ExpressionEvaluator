@@ -2,8 +2,6 @@ package com.higginsthomas.expressionevaluator.properties;
 
 import java.math.BigDecimal;
 
-import com.higginsthomas.expressionevaluator.common.IncompatibleTypeException;
-
 
 /**
  * Represents a property value of type DECIMAL.

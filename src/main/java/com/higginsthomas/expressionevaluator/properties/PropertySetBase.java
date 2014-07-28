@@ -1,6 +1,7 @@
 package com.higginsthomas.expressionevaluator.properties;
 
 
+
 /**
  * Convenience class providing a base implementation for {@link PropertySet}.
  * <p>

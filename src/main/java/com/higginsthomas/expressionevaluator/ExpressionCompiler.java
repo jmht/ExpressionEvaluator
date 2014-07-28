@@ -5,8 +5,8 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import com.higginsthomas.expressionevaluator.compiler.ErrorListener;
 import com.higginsthomas.expressionevaluator.compiler.IntermediateCompiler;
-import com.higginsthomas.expressionevaluator.errors.ErrorListener;
 import com.higginsthomas.expressionevaluator.evaluator.Evaluator;
 import com.higginsthomas.expressionevaluator.evaluator.operations.Operation;
 import com.higginsthomas.expressionevaluator.grammar.ExpressionGrammarLexer;

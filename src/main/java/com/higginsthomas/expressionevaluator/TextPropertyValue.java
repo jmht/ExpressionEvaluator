@@ -3,6 +3,7 @@ package com.higginsthomas.expressionevaluator;
 import com.higginsthomas.expressionevaluator.errors.IncompatibleTypeException;
 
 
+
 /**
  * Represents a property value of type TEXT.
  * 

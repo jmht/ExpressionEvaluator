@@ -1,8 +1,10 @@
-package com.higginsthomas.expressionevaluator.errors;
+package com.higginsthomas.expressionevaluator.compiler;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
+
+import com.higginsthomas.expressionevaluator.errors.CompileException;
 
 
 public class ErrorListener extends BaseErrorListener {

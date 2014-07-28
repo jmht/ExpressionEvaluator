@@ -2,6 +2,7 @@ package com.higginsthomas.expressionevaluator.errors;
 
 import com.higginsthomas.expressionevaluator.PropertyValueType;
 
+
 public class IncompatibleTypeException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     public IncompatibleTypeException(PropertyValueType a, PropertyValueType b) {

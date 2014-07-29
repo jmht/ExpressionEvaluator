@@ -8,21 +8,19 @@ import java.math.BigInteger;
  * 
  * @author James Higgins-Thomas
  */
-public class IntegerPropertyValue implements PropertyValue {
-    private BigInteger value;
-
+public class IntegerPropertyValue extends ConstantPropertyValueBase {
     public IntegerPropertyValue(BigInteger value) {
-        this.value = value;
+        super(PropertyValueType.INTEGER, value);
     }
 
     public IntegerPropertyValue(long value) {
-        this.value = BigInteger.valueOf(value);
+        this(BigInteger.valueOf(value));
     }
 
-    public PropertyValueType getType() { return PropertyValueType.INTEGER; }
+    @Override
+    public BigInteger getValue() { return (BigInteger)super.getValue(); }
 
-    public BigInteger getValue() { return value; }
-
+    @Override
     public int compareTo(PropertyValue that) {
         if ( !this.getType().equals(that.getType()) ) throw new IncompatibleTypeException(this.getType(), that.getType());
         return ((BigInteger)this.getValue()).compareTo((BigInteger)that.getValue());

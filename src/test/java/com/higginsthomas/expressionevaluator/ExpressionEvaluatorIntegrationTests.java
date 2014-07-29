@@ -95,4 +95,18 @@ public class ExpressionEvaluatorIntegrationTests {
         
         assertThat(evaluator.evaluate(propertySet), equalTo(false));
     }
+    
+    @Test
+    public void test_iInRange() throws CompileException {
+        ExpressionEvaluator evaluator = compiler.compile("i in [0:<10]", propertyMap);
+        
+        assertThat(evaluator.evaluate(propertySet), equalTo(true));
+    }
+    
+    @Test
+    public void test_iInSet() throws CompileException {
+        ExpressionEvaluator evaluator = compiler.compile("i in {1, 2, 5}", propertyMap);
+        
+        assertThat(evaluator.evaluate(propertySet), equalTo(true));
+    }
 }

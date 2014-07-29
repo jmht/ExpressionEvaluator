@@ -10,21 +10,19 @@ import org.joda.time.LocalDate;
  * 
  * @author James Higgins-Thomas
  */
-public class DatePropertyValue implements PropertyValue {
-    private LocalDate value;
-
+public class DatePropertyValue extends ConstantPropertyValueBase {
     public DatePropertyValue(LocalDate value) {
-        this.value = value;
+        super(PropertyValueType.DATE, value);
     }
 
     public DatePropertyValue(Calendar value) {
-        this.value = LocalDate.fromCalendarFields(value);
+        this(LocalDate.fromCalendarFields(value));
     }
 
-    public PropertyValueType getType() { return PropertyValueType.DATE; }
-
-    public LocalDate getValue() { return value; }
-
+    @Override
+    public LocalDate getValue() { return (LocalDate)super.getValue(); }
+    
+    @Override
     public int compareTo(PropertyValue that) {
         if ( !this.getType().equals(that.getType()) ) throw new IncompatibleTypeException(this.getType(), that.getType());
         return ((LocalDate)this.getValue()).compareTo((LocalDate)that.getValue());

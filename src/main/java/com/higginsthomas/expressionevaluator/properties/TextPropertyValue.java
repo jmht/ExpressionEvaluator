@@ -1,28 +1,24 @@
 package com.higginsthomas.expressionevaluator.properties;
 
 
-
-
 /**
  * Represents a property value of type TEXT.
  * 
  * @author James Higgins-Thomas
  */
-public class TextPropertyValue implements PropertyValue {
-    private String value;
-
+public class TextPropertyValue extends ConstantPropertyValueBase {
     public TextPropertyValue(String value) {
-        this.value = value;
+        super(PropertyValueType.TEXT, value);
     }
 
     public TextPropertyValue(char ch) {
-        this.value = String.valueOf(ch);
+        this(String.valueOf(ch));
     }
 
-    public PropertyValueType getType() { return PropertyValueType.TEXT; }
+    @Override
+    public String getValue() { return (String)super.getValue(); }
 
-    public String getValue() { return value; }
-
+    @Override
     public int compareTo(PropertyValue that) {
         if ( !this.getType().equals(that.getType()) ) throw new IncompatibleTypeException(this.getType(), that.getType());
         return ((String)this.getValue()).compareTo((String)that.getValue());

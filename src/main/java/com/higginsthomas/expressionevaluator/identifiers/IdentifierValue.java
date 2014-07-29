@@ -1,10 +1,11 @@
 package com.higginsthomas.expressionevaluator.identifiers;
 
 import com.higginsthomas.expressionevaluator.properties.PropertyValue;
+import com.higginsthomas.expressionevaluator.properties.PropertyValueBase;
 import com.higginsthomas.expressionevaluator.properties.PropertyValueType;
 
 
-public class IdentifierValue implements PropertyValue {
+public class IdentifierValue extends PropertyValueBase {
     private final IdentifierTable table;
     private final int index;
     

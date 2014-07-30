@@ -1,8 +1,0 @@
-       \  Integer   Decimal   Float     Date      Text      Variant
-        \ --------  --------  --------  --------  --------  --------  
-Integer | Integer   Decimal   Float     --        Integer   Integer
-Decimal | Decimal   Decimal   Float     --        Decimal   Decimal
-Float   | Float     Float     Float     --        Float     Float
-Date    | --        --        --        Date      Date      Date
-Text    | Integer   Decimal   Float     Date      Text      Text
-Variant | Integer   Decimal   Float     Date      Text      Variant

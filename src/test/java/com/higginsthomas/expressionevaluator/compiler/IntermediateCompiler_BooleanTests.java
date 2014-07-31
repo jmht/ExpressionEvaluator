@@ -86,6 +86,6 @@ public class IntermediateCompiler_BooleanTests extends
         
         OrOperation result = (OrOperation)sut.visit(tree);
 
-        assertThat(result.isNegated(), is(true));
+        assertThat(result.isNegated(), is(false));
     }
 }

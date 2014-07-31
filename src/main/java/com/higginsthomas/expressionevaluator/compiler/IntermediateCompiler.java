@@ -39,7 +39,12 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
 
     @Override
     public Object visitNotExpr(final ExpressionGrammarParser.NotExprContext ctx) {
-        return ((Operation)visit(ctx.expr())).negate();
+        Operation operation = (Operation)visit(ctx.expr());
+        if ( ctx.not().size() % 2 == 0 ) {
+            return operation;               // even number of "not"s cancel out
+        } else {
+            return operation.negate();      // odd number of "not"s negate
+        }
     }
 
     @Override

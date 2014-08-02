@@ -38,6 +38,15 @@ public class IntermediateCompiler extends ExpressionGrammarBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitStart(final ExpressionGrammarParser.StartContext ctx) {
+        Object result = super.visitStart(ctx);
+        if ( result == null ) {
+            result = new NopOperation(false);
+        }
+        return result;
+    }
+    
+    @Override
     public Object visitNotExpr(final ExpressionGrammarParser.NotExprContext ctx) {
         Operation operation = (Operation)visit(ctx.expr());
         if ( ctx.not().size() % 2 == 0 ) {

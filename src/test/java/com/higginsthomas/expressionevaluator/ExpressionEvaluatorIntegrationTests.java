@@ -109,4 +109,11 @@ public class ExpressionEvaluatorIntegrationTests {
         
         assertThat(evaluator.evaluate(propertySet), equalTo(true));
     }
+    
+    @Test
+    public void test_empty() throws CompileException {
+        ExpressionEvaluator evaluator = compiler.compile("", propertyMap);
+        
+        assertThat(evaluator.evaluate(propertySet), equalTo(true));
+    }
 }

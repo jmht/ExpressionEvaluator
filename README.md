@@ -11,6 +11,7 @@ The basic motivation remains the same - to explore the option
 of a dynamic query capability in a service.
 
 Example:
+<pre>
   List<Person> selected = QueryPeople(people, "LastName like '.*son' and age < 40");
   
   ...
@@ -85,4 +86,4 @@ Example:
       int    getTenure();
       LocalDate getBirthDate();
   }
-  
+  </pre>
